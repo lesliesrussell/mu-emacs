@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/visual-regexp.el/visual-regexp.el

@@ -1,0 +1,60 @@
+#+title:  my org settings
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* org mode configuration
+** fast selection
+#+begin_src elisp
+  (setq org-use-fast-todo-selection t)
+#+end_src
+** files and folders
+ I want Dropbox as my root
+#+begin_src elisp
+  (setq dropbox-root "~/Dropbox/org/")
+  (setq org-default-notes-file (concat dropbox-root "notes.org"))
+  (setq my-project-file (concat dropbox-root "projects.org"))
+  (setq my-diary (concat dropbox-root "diary.org"))
+#+end_src
+*** agenda files
+#+begin_src elisp
+  (setq org-agenda-files (quote ("~/Dropbox/org/journal.org"
+                                 "~/Dropbox/org/notes.org"
+                                 "~/Dropbox/org/projects.org")))
+#+end_src
+** Define the custum capture templates
+#+begin_src elisp
+(setq org-capture-templates
+      '(("t" "todo" entry (file org-default-notes-file)
+	 "* TODO %?\n%u\n%a\n" :clock-in t :clock-resume t)
+	("m" "Meeting" entry (file org-default-notes-file)
+	 "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
+	("d" "Diary" entry (file+datetree my-diary)
+	 "* %?\n%U\n" :clock-in t :clock-resume t)
+	("i" "Idea" entry (file org-default-notes-file)
+	 "* %? :IDEA: \n%t" :clock-in t :clock-resume t)
+	("n" "Next Task" entry (file+headline org-default-notes-file "Tasks")
+	 "** NEXT %? \nDEADLINE: %t")
+	("p" "Project" entry (file+headline my-project-file "Project")
+	 "* :PROJECT: %? \n" :clock-in t :clock-resume t)))
+#+end_src
+** refile targets
+#+begin_src elisp
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9))))
+#+end_src
+** set up todo
+#+begin_src elisp :tangle
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                (sequence "PENDING(p@/!)" "CHECKIN(c@/!)" "|" "FINISHED(f@/!)" "PHONE" "MEETING"))))
+
+  (setq org-todo-keyword-faces
+        (quote (("TODO" :foreground "red" :weight bold)
+                ("NEXT" :foreground "blue" :weight bold)
+                ("DONE" :foreground "forest green" :weight bold)
+                ("PENDING" :foreground "orange" :weight bold)
+                ("CHECKIN" :foreground "magenta" :weight bold)
+                ("FINISHED" :foreground "forest green" :weight bold)
+                ("MEETING" :foreground "forest green" :weight bold)
+                ("PHONE" :foreground "forest green" :weight bold))))
+#+end_src

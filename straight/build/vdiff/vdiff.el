@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/emacs-vdiff/vdiff.el

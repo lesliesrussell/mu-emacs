@@ -1,0 +1,24 @@
+#+title:  Deft Extras
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* Config deft
+** select deft dir
+Stolen from [[https://www.reddit.com/r/emacs/comments/h0h4ix/how_to_configure_multile_directories_with_deft/][r/emacs]]
+#+begin_src elisp
+  ;; (defvar mu-deft-dir-list '()
+  ;;   "List of deft dirs")
+  (require 'consult)
+  (require 'deft)
+
+  (setq mu-deft-dir-list '("~/Documents/"
+                           "~/.config/emacs/modules/"
+                           ))
+
+  (defun mu-select-deft-dir ()
+    (interactive)
+    (setq deft-directory
+          (consult--read mu-deft-dir-list :prompt "Directory: "))
+    (deft))
+  (global-set-key (kbd "C-c M-d") #'mu-select-deft-dir)
+#+end_src

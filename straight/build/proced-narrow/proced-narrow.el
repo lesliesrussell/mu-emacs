@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/proced-narrow/proced-narrow.el

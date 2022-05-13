@@ -1,0 +1,17 @@
+#+title: which key
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* which key
+#+begin_src elisp
+(use-package which-key
+  :straight t
+  :hook (emacs-startup . (lambda ()
+			   (which-key-mode))))
+#+end_src
+** posframe
+#+begin_src elisp
+  (use-package which-key-posframe
+    :straight t
+    :init (which-key-posframe-mode 1))
+#+end_src

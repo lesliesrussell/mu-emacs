@@ -1,0 +1,9 @@
+#+title: profiling
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* esup
+#+begin_src elisp :tangle yes
+  (use-package esup
+    :straight t)
+#+end_src

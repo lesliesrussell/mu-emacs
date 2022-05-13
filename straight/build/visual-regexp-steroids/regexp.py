@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/visual-regexp-steroids.el/regexp.py

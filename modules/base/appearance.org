@@ -1,0 +1,42 @@
+#+title: Theme
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* theme
+Some other really nice themes
+#+begin_example
+      (use-package ancient-one-dark-theme
+        :straight t)
+
+      (use-package arc-dark-theme
+        :straight t)
+
+      (use-package badger-theme
+        :straight t)
+
+      (use-package birds-of-paradise-plus-theme
+        :straight t)
+#+end_example
+
+#+begin_src elisp :tangle yes
+  (if (display-graphic-p)
+      (load-theme 'ancient-one-dark t)
+    (load-theme 'ancient-one-dark t))
+
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame (load-theme 'ancient-one-dark t))))
+    (load-theme 'ancient-one-dark t))
+#+end_src
+* COMMENT less distractions
+Moved this to early init because it being there prevents
+screen from looking crappy for a few seconds
+#+begin_src elisp :tangle yes
+  (if (fboundp 'menu-bar-mode)
+      (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode)
+      (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
+#+end_src

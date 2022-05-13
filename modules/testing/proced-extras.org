@@ -1,0 +1,15 @@
+#+title: procede extras
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* Proced extras
+** narrow
+proced is useful this ability to live narrow makes it op for me.
+#+begin_src elisp
+  (use-package proced-narrow
+    :straight t
+    :defer t
+    :after proced
+    :bind (:map proced-mode-map
+                ("/" . proced-narrow)))
+#+end_src

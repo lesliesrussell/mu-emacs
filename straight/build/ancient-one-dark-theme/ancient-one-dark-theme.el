@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/ancient-one-dark-emacs/ancient-one-dark-theme.el

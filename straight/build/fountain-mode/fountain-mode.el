@@ -1,0 +1,1 @@
+/home/lsr/.config/emacs/straight/repos/fountain-mode/fountain-mode.el
