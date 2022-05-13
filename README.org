@@ -2,7 +2,7 @@
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle "./init.el"
 
-[[./2022-05-03_00-04.png]]
+[[./screenshot.png]]
 
 * Reasoning
 
@@ -58,9 +58,9 @@ None of this is important really but I just wanted to explain and include some w
 It is not my opinion about how you should work. It is not hard to configure. It is not difficult to change.
 
 * Installation
-/Coming Soon/
 You will want to save your current configs someplace safe. Then just clone this repo to your preferred /user-emacs-directory/ like so:
 #+begin_example
+  git clone https://github.com/lesliesrussell/mu-emacs ~/.your-prefered-user-emacs-directory
 #+end_example
 I have a file called /README.org/ because github uses that as a default. But I'd probably rename it to init.org on your side. It won't change how the file tangles, that is handled by the header arguments. One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press *C-c C-c* that will force org-mode to reload those arguments and might save you some headaches.
 
