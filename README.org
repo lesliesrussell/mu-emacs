@@ -6,7 +6,7 @@
 
 * Reasoning
 
-There are things I like about [[https://github.com/doomemacs/doomemacs][Doom Emacs]] and things I like about [[https://github.com/syl20bnr/spacemacs][Spacemacs]] and lots that I didn't like. I think they are great for the people who use them and great for people who just want to get up and running fast. But I am not a fan of having to learn how someone else wants me to use my editor. Keep your opinions. So, as I was working on my little config (all the while grousing about one thing or another) when I thought maybe others might feel the same as me. The ease of just cloning a repo to get up and running but without someone else's opinion standing between me and my work.
+There are things I like about [[https://github.com/doomemacs/doomemacs][Doom Emacs]] and things I like about [[https://github.com/syl20bnr/spacemacs][Spacemacs]] and lots that I didn't like. I think they are great for the people who use them and great for people who just want to get up and running fast. There are millions of reasons to like and use either of those or any of the other configs available. But I am not a fan of having to learn how someone else wants me to use my editor. Keep your opinions. So, as I was working on my little config (all the while grousing about one thing or another) when I thought maybe others might feel the same as me. The ease of just cloning a repo to get up and running but without someone else's opinion standing between me and my work.
 
 I found myself frustrated with DE and S because of how difficult minor changes (cosmetic, or functional) were. I spent way too much time trying to bend those opinions to mine, and I had trouble bending mine to theirs so...time to move on.
 
