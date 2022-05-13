@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/birds-of-paradise-plus-theme.el/birds-of-paradise-plus-theme.el

@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/git-timemachine/git-timemachine.el

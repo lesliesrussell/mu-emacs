@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/arc-dark-theme/arc-dark-theme.el

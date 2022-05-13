@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/lambda-line/lambda-line.el

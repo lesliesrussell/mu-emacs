@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/company-mode/company-elisp.el

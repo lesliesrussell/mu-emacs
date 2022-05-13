@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/org-superstar-mode/org-superstar.el

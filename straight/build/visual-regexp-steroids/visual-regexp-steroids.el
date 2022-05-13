@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/visual-regexp-steroids.el/visual-regexp-steroids.el

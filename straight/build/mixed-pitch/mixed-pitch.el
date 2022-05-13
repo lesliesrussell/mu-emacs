@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/mixed-pitch/mixed-pitch.el

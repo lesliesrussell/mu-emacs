@@ -1,1 +1,0 @@
-/home/lsr/.config/emacs/straight/repos/which-key-posframe/which-key-posframe.el
