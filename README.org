@@ -172,6 +172,21 @@ I want to clean up base-core and move key bindings into a module
 After getting to a point where I feel comfortable with using this config daily I decided to test the start up time.
 I am happy with the results:
 #+begin_example
+  Total User Startup Time: 0.274sec     Total Number of GC Pauses: 4     Total GC Time: 0.023sec
+
+  bootstrap.el:82  0.194sec   70%
+
+  lambda-line-config.el:37  0.021sec   7%
+
+  bootstrap.el:80  0.018sec   6%
+
+  fontaine-config.el:40  0.013sec   4%
+
+  core.el:155  0.012sec   4%
+
+  vc-git.elc:397  0.009sec   3%
+
+  bootstrap.el:8  0.004sec   1%
 #+end_example
 
 I haven't done anything special. All the code came from reading other users config. Directly stealing from Spacemacs, Doom Emacs, and Sanemacs.
