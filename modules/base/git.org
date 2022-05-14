@@ -9,6 +9,21 @@
     :defer t
     :bind (("C-c C-g m" . #'magit)))
 #+end_src
+** magit-gitflow plugin
+  /C-f/ in the magit status buffer invokes the magit-gitflow popup. If you
+  would like to use a different key, set the magit-gitflow-popup-key variable
+  before loading magit-gitflow
+  [[https://github.com/jtatarik/magit-gitflow/tree/cc41b561ec6eea947fe9a176349fb4f771ed865b][jtatarik/magit-gitflow]]
+#+begin_src elisp
+    (use-package magit-gitflow
+              :straight t
+              :defer t)
+
+  ;; (setq magit-gitflow-popup-key "C-n")
+
+    ;; (require 'magit-gitflow)
+    (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+#+end_src
 * vdiff
 #+begin_src elisp
   (use-package vdiff

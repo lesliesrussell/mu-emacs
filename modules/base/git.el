@@ -3,6 +3,15 @@
   :defer t
   :bind (("C-c C-g m" . #'magit)))
 
+(use-package magit-gitflow
+            :straight t
+            :defer t)
+
+;; (setq magit-gitflow-popup-key "C-n")
+
+  ;; (require 'magit-gitflow)
+  (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+
 (use-package vdiff
   :straight t
   :commands (vdiff-mode)
