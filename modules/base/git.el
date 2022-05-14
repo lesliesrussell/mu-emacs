@@ -1,5 +1,6 @@
 (use-package magit
   :straight t
+  :defer t
   :bind (("C-c C-g m" . #'magit)))
 
 (use-package vdiff
@@ -35,3 +36,8 @@
                         ;; Only use two buffers (working file and index) for vdiff-magit-stage
                         ;; (setq vdiff-magit-stage-is-2way nil)
                         )))
+
+(use-package git-timemachine
+  :straight t
+  :defer t
+  :bind (("C-c C-g t" . #'git-timemachine-toggle)))

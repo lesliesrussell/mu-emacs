@@ -1,4 +1,4 @@
-#+title: testing org
+#+title:  org settings
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle yes
 
@@ -6,13 +6,14 @@
 Stolen from https://lucidmanager.org/productivity/ricing-org-mode/
 Set default, fixed and variabel pitch fonts
 Use M-x menu-set-font to view available fonts
+** COMMENT mixed pitch
 #+begin_src elisp
 (use-package mixed-pitch
   :straight t
   :hook
   (text-mode . mixed-pitch-mode)
   :config
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 100)
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 80)
   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans"))
 #+end_src
@@ -43,14 +44,16 @@ Show hidden emphasis markers
 * pretty bullets
 Nice bullets
 #+begin_src elisp
-(use-package org-superstar
-  :straight t
-  :config
-  (setq org-superstar-special-todo-items t)
+  (use-package org-superstar
+    :straight t
+    :defer t
+    :config
+    (setq org-superstar-special-todo-items t))
+
   (add-hook 'org-mode-hook (lambda ()
-                             (org-superstar-mode 1))))
+                             (org-superstar-mode 1)))
 #+end_src
-* hack for scaling latex
+* COMMENT hack for scaling latex
 Increase size of LaTeX fragment previews
 #+begin_src elisp
 (plist-put org-format-latex-options :scale 2)

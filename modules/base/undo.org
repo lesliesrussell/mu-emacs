@@ -3,6 +3,7 @@
 #+PROPERTY: header-args :tangle yes
 
 * undoing
+Opps! I made an opinion. Not a big one but... For me, having /C-z/ bound to *suspend-frame* is kinda dumb. Especially for a gui because it just locks up and you are screwed. On the terminal it is useful so I moved it to /C-x C-z/ which just makes better sense. Now you can use a lighter key combo for something more useful like undo or even add another top level map. Undo may not be the best use for /C-z/ but it sure ain't *suspend-frame*
 #+begin_src elisp
   (use-package undo-fu
     :straight t

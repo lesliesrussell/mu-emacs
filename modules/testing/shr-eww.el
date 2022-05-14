@@ -1,5 +1,6 @@
 (use-package shrface
   :straight t
+  :defer t
   :config
   (shrface-basic)
   (shrface-trial)
@@ -7,7 +8,8 @@
   (setq shrface-href-versatile t)
   ;; (define-key 'shrface-mode-map (kbd "M-l") #'consult-imenu)
 
-  (Require' 'shr-tag-pre-highlight)
+  (require 'shrface)
+  (require 'shr-tag-pre-highlight)
   (add-to-list 'shr-external-rendering-functions '(pre . shrface-shr-tag-pre-highlight))
   (defun shrface-shr-tag-pre-highlight (pre)
     "Highlighting code in PRE."
@@ -42,6 +44,7 @@
 
 (use-package eww
   :straight t
+  :defer t
   :init
   (add-hook 'eww-after-render-hook #'shrface-mode)
   :config

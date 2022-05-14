@@ -3,6 +3,10 @@
 #+PROPERTY: header-args :tangle yes
 
 * general
+** Info
+I tried to keep this non-invasive. I don't think you are locked into general but I will keep working on that.
+I think you can safely disable this and not suffer.
+** Source
      #+begin_src elisp
        (use-package general
          :straight t
@@ -11,16 +15,10 @@
          :config )
 
        (general-define-key
-        ;; "C->" #'indent-rigidly-right-to-tab-stop
-        ;; "C-<" #'indent-rigidly-left-to-tab-stop
         "C->" #'end-of-buffer
         "C-<" #'beginning-of-buffer
-        "M-DEL" #'sanemacs/backward-kill-word
-        "C-DEL" #'sanemacs/backward-kill-word
-        "C-x C-b" #'electric-buffer-list
         "C-z" #'zap-up-to-char
         "M-o f" #'other-frame
-        "C-c p" #'package-list-packages
         "C-c r" #'reload-config
         "C-x C-b" #'ibuffer
         "C-x C-j" #'dired-jump)

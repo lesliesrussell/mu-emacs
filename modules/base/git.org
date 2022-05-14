@@ -6,6 +6,7 @@
 #+begin_src elisp
   (use-package magit
     :straight t
+    :defer t
     :bind (("C-c C-g m" . #'magit)))
 #+end_src
 * vdiff
@@ -45,4 +46,11 @@
                           ;; Only use two buffers (working file and index) for vdiff-magit-stage
                           ;; (setq vdiff-magit-stage-is-2way nil)
                           )))
+#+end_src
+** timemachine
+#+begin_src elisp
+  (use-package git-timemachine
+    :straight t
+    :defer t
+    :bind (("C-c C-g t" . #'git-timemachine-toggle)))
 #+end_src

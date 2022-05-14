@@ -12,44 +12,48 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq package-enable-at-startup nil)
-
 (straight-use-package 'use-package)
 
 (use-package modular-config
   :straight t
   :custom
   (modular-config-list '((none ())
-			 ;; the most minimal config I can stand
-			 (base (base/core
-				base/daemon
-				base/appearance
-				;; base/mode-line
-				base/undo
-				base/keybindings
-				base/searching
-				base/git
-				base/completion
-				base/which))
-			 ;; my stable module group for daily use
-			 (stable ((base)
-				  stable/my-org
-				  stable/my-org-pretty))
-			 ;; just private configs that might not want in repo
-			 (private ((stable)
-				   private/writing
-				   private/org-roam
-				   ;; private-eshell-syntax-highlighting
-				   private/deft-extras
-				   ))
-			 ;; if I add a new module I can test drive it
-			 (testing ((private)
-				   testing/org-test
-				   testing/proced-extras
-				   testing/lambda-line-config
-				   ;; testing/evil
-				   ))
-			 ))
+                         ;; the most minimal config I can stand
+                         (base (base/core
+                                base/daemon
+                                base/appearance
+                                ;; base/mode-line
+                                base/undo
+                                base/keybindings
+                                base/searching
+                                base/git
+                                base/completion
+                                base/which))
+                         ;; my stable module group for daily use
+                         (stable ((base)
+                                  stable/mu-org
+                                  stable/writing
+                                  stable/org-roam
+                                  stable/deft-extras
+                                  ))
+                         ;; just private configs that might not want in repo
+                         (private ((stable)
+                                   ;; private/keybinds
+                                   ))
+                         ;; if I add a new module I can test drive it
+                         (testing ((private)
+                                   testing/org-test
+                                   testing/proced-extras
+                                   testing/lambda-line-config
+                                   testing/esup
+                                   testing/proced-extras
+                                   ;; testing/programming-go
+                                   ;; testing/shr-eww
+                                   ;; testing/evil
+                                   testing/popper-config
+                                   testing/fontaine-config
+                                   ))
+                         ))
   ;; I default to private but so far it has been both
   ;; comfortable and safe to change this to any of the other
   ;; module groups.

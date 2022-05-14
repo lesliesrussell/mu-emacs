@@ -3,11 +3,13 @@
 #+PROPERTY: header-args :tangle yes
 
 * theme
+#+begin_src elisp
+  (use-package ancient-one-dark-theme
+    :straight t)
+#+end_src
+
 Some other really nice themes
 #+begin_example
-      (use-package ancient-one-dark-theme
-        :straight t)
-
       (use-package arc-dark-theme
         :straight t)
 

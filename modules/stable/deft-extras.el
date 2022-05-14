@@ -1,7 +1,7 @@
 ;; (defvar mu-deft-dir-list '()
 ;;   "List of deft dirs")
-(require 'consult)
-(require 'deft)
+;; (require 'consult)
+;; (require 'deft)
 
 (setq mu-deft-dir-list '("~/Documents/"
                          "~/.config/emacs/modules/"

@@ -102,6 +102,12 @@
    backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 
   (setq create-lockfiles nil)
+
+  ;; Just found out about these.
+  ;; (setq completion-styles '(initials partial-completion flex)) ; > Emacs 27.1
+  ;; (setq completion-cycle-threshold 10)
+
+  (setq view-read-only t)
 #+end_src
 ** make magit work with git credential manager
 One way that I work is using git/magit in eshell. This setting makes eshell, git, magit, emacs play together well
@@ -142,6 +148,7 @@ One way that I work is using git/magit in eshell. This setting makes eshell, git
 #+end_src
 * functions
 ** backward kill word
+I stole this and a bunch of other stuff from [[https://sanemacs.com/][Sanemacs]] because I think it is a really great config with lots of handy tweaks. Lots of stuff I knew nothing about. It helped me a lot.
   #+begin_src elisp
   (defun mu/backward-kill-word ()
     (interactive "*")
@@ -159,13 +166,15 @@ One way that I work is using git/magit in eshell. This setting makes eshell, git
     (interactive)
     (load-file (concat user-emacs-directory "init.el")))
   #+end_src
-** insert org header
+** COMMENT insert org header
+This is a bit of nonsense
 #+begin_src elisp
   (defun insert-org-header ()
       (interactive)
     (insert "*"))
 #+end_src
 ** module functions
+This works. Surprised me how useful just these two little keybinds were.
 #+begin_src elisp
   (defun mu-open-modules-dir ()
     (interactive)
@@ -190,6 +199,7 @@ One way that I work is using git/magit in eshell. This setting makes eshell, git
   (global-set-key (kbd "<f5>") #'mu-eval-dwim)
 #+end_src
 ** find modules
+Again stupid handy
 Stole parts of this from [[https://emacs.stackexchange.com/questions/12334/elisp-for-applying-command-to-only-the-selected-region][StackExchange:Elisp for applying command to only the selected region]]
 On my laptop, I just clone the repo to ~/.config/emacs and in that case I can use this function to search for the module I want.
 #+begin_src elisp
@@ -199,6 +209,8 @@ On my laptop, I just clone the repo to ~/.config/emacs and in that case I can us
   (global-set-key (kbd "M-s f") #'mu-find-modules)
 #+end_src
 ** gchm
+I saw a reddit about this package and tried it. I am not sure it helps (I don't really notice it) but it doesn't hurt. You decide.
+[[https://github.com/emacsmirror/gcmh][GCMH - the Garbage Collector Magic Hack]]
 #+begin_src elisp
 (use-package gcmh
   :straight t
@@ -207,7 +219,9 @@ On my laptop, I just clone the repo to ~/.config/emacs and in that case I can us
   (gcmh-auto-idle-delay-factor 10)
   (gcmh-high-cons-threshold (* 16 1024 1024) "16MB"))
 #+end_src
-** eshell here
+** COMMENT eshell here
+I wanna say I stole this from [[http://www.howardism.org/][Howard Abrams]] I think he posted it on a reddit thread.
+I don't use the /eshell/x/ function but I included it for completeness.
 #+begin_src elisp
   (defun eshell-here ()
     "Opens up a new shell in the directory associated with the
@@ -235,6 +249,7 @@ On my laptop, I just clone the repo to ~/.config/emacs and in that case I can us
     (delete-window))
 #+end_src
 ** eshell after quit
+This is what I use instead of /eshell/x/ this works all the time, every time. I don't want eshell windows hanging around when the process has ended.
 Stolen from [[https://stackoverflow.com/questions/51867693/emacs-eshell-kill-window-on-exit][Stack Exchange:Emacs eshell - Kill window on exit]]
 #+begin_src elisp
   (require 'eshell)
@@ -245,20 +260,49 @@ Stolen from [[https://stackoverflow.com/questions/51867693/emacs-eshell-kill-win
 
   (advice-add 'eshell-life-is-too-much :after 'my-custom-func)
 #+end_src
-** tangle all modules
+**  eshell jump to recently visited files
+Stole this from [[https://karthinks.com/software/jumping-directories-in-eshell/][Karthinks]] about to steal some more stuff!
+#+begin_src elisp
+  (defun eshell/z (&optional regexp)
+    "Navigate to a previously visited directory in eshell, or to
+  any directory proferred by `consult-dir'."
+    (let ((eshell-dirs (delete-dups
+                        (mapcar 'abbreviate-file-name
+                                (ring-elements eshell-last-dir-ring)))))
+      (cond
+       ((and (not regexp) (featurep 'consult-dir))
+        (let* ((consult-dir--source-eshell `(:name "Eshell"
+                                                   :narrow ?e
+                                                   :category file
+                                                   :face consult-file
+                                                   :items ,eshell-dirs))
+               (consult-dir-sources (cons consult-dir--source-eshell
+                                          consult-dir-sources)))
+          (eshell/cd (substring-no-properties
+                      (consult-dir--pick "Switch directory: ")))))
+       (t (eshell/cd (if regexp (eshell-find-previous-directory regexp)
+                       (completing-read "cd: " eshell-dirs)))))))
+#+end_src
+** DONE tangle all modules
+- Note taken on [2022-05-13 Fri 14:49] \\
+  That was easy. Brainfart
+- Note taken on [2022-05-13 Fri 14:42] \\
+  Fix module path. Maybe make it a constant defined in /core/
+This works. Tangles everything under /modules/ If you change the name of that directory you'll need to change the path in this function.
+I need to fix that.
 #+begin_src elisp
   (defun mu-tangle-modules ()
     (interactive)
     " Recursively tangle all modules under the default module directory"
     (setq tangl-modul-lst
-          (directory-files-recursively (concat user-emacs-directory )"modules/"  "\\.org\\'" t))
+          ;; (directory-files-recursively (concat user-emacs-directory )"modules/"  "\\.org\\'" t)
+          (directory-files-recursively modular-config-path  "\\.org\\'" t))
 
     (dolist (element tangl-modul-lst)
       (print element)
-      (org-babel-tangle-file element))
-    )
+      (org-babel-tangle-file element)))
 #+end_src
-** miniedit
+** COMMENT miniedit
 I don't remember what this does.
 #+begin_src elisp
 (use-package miniedit

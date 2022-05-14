@@ -86,6 +86,12 @@
 
 (setq create-lockfiles nil)
 
+;; Just found out about these.
+;; (setq completion-styles '(initials partial-completion flex)) ; > Emacs 27.1
+;; (setq completion-cycle-threshold 10)
+
+(setq view-read-only t)
+
 (setenv "GCM_CREDENTIAL_STORE" "gpg")
 
 (add-hook 'prog-mode-hook
@@ -112,6 +118,8 @@
   :defer t
   :custom ((org-src-window-setup 'current-window)))
 
+(setq use-package-compute-statistics t)
+
 (defun mu/backward-kill-word ()
   (interactive "*")
   (push-mark)
@@ -122,28 +130,15 @@
   (interactive)
   (load-file (concat user-emacs-directory "init.el")))
 
-(defun insert-org-header ()
-    (interactive)
-  (insert "*"))
-
 (defun mu-open-modules-dir ()
   (interactive)
   (dired-jump nil (concat user-emacs-directory "modules/")))
 (global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
 
-
 (defun mu-open-emacs-dir ()
   (interactive)
   (dired-jump nil user-emacs-directory))
 (global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
-
-(defun mu-eval-dwim (beginning end)
-  (interactive "r")
-  (when (use-region-p)
-    (eval-region beginning end)
-    (eval-buffer)))
-
-(global-set-key (kbd "<f5>") #'mu-eval-dwim)
 
 (defun mu-find-modules ()
   (interactive)
@@ -157,31 +152,6 @@
   (gcmh-auto-idle-delay-factor 10)
   (gcmh-high-cons-threshold (* 16 1024 1024) "16MB"))
 
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-    current buffer's file. The eshell is renamed to match that
-    directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (height (/ (window-total-height) 3))
-         (name   (car (last (split-string parent "/" t)))))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (rename-buffer (concat "*eshell: " name "*"))
-
-    (insert (concat "ls"))
-    (eshell-send-input)))
-
-(global-set-key (kbd "C-!") 'eshell-here)
-
-(defun eshell/x ()
-  (insert "exit")
-  (eshell-send-input)
-  (delete-window))
-
 (require 'eshell)
 
 (defun my-custom-func ()
@@ -190,18 +160,33 @@
 
 (advice-add 'eshell-life-is-too-much :after 'my-custom-func)
 
+(defun eshell/z (&optional regexp)
+  "Navigate to a previously visited directory in eshell, or to
+any directory proferred by `consult-dir'."
+  (let ((eshell-dirs (delete-dups
+                      (mapcar 'abbreviate-file-name
+                              (ring-elements eshell-last-dir-ring)))))
+    (cond
+     ((and (not regexp) (featurep 'consult-dir))
+      (let* ((consult-dir--source-eshell `(:name "Eshell"
+                                                 :narrow ?e
+                                                 :category file
+                                                 :face consult-file
+                                                 :items ,eshell-dirs))
+             (consult-dir-sources (cons consult-dir--source-eshell
+                                        consult-dir-sources)))
+        (eshell/cd (substring-no-properties
+                    (consult-dir--pick "Switch directory: ")))))
+     (t (eshell/cd (if regexp (eshell-find-previous-directory regexp)
+                     (completing-read "cd: " eshell-dirs)))))))
+
 (defun mu-tangle-modules ()
   (interactive)
   " Recursively tangle all modules under the default module directory"
   (setq tangl-modul-lst
-        (directory-files-recursively (concat user-emacs-directory )"modules/"  "\\.org\\'" t))
+        ;; (directory-files-recursively (concat user-emacs-directory )"modules/"  "\\.org\\'" t)
+        (directory-files-recursively modular-config-path  "\\.org\\'" t))
 
   (dolist (element tangl-modul-lst)
     (print element)
-    (org-babel-tangle-file element))
-  )
-
-(use-package miniedit
-  :straight t
-  :commands minibuffer-edit
-  :init (miniedit-install))
+    (org-babel-tangle-file element)))

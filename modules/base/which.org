@@ -3,6 +3,7 @@
 #+PROPERTY: header-args :tangle yes
 
 * which key
+For me which key used to be indispensable, now I disable it. But you do you. I have it enabled by default because I hope it will be helpful. If not just comment it out.
 #+begin_src elisp
 (use-package which-key
   :straight t

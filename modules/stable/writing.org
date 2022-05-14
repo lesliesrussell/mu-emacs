@@ -3,7 +3,8 @@
 #+PROPERTY: header-args :tangle yes
 
 * Distraction-free screen
-** olivetti
+** COMMENT olivetti
+Getting rid of olivetti because I only used it for what fontaine does.
 #+begin_src elisp
 (use-package olivetti
   :straight t
@@ -50,7 +51,11 @@
 	 ("<f7>" . flyspell-word)
 	 ("C-;" . flyspell-auto-correct-previous-word)))
 #+end_src
-** deft
+** TODO Deft
+- Note taken on [2022-05-14 Sat 02:13] \\
+  The /C-c C-g/ binding has got to go! I use that for escape. No big deal if I keep which-key disabled. Still...annoying.
+Needs to be moved to core so it makes more sense.
+*** deft
 #+begin_src elisp
   (use-package deft
     :straight t
@@ -63,7 +68,7 @@
     :init)
     (global-set-key (kbd "M-s F") #'mu-deft-modules)
 #+end_src
-** deft modules
+*** deft modules
 #+begin_src elisp
   (defun mu-deft-modules ()
     (interactive)
@@ -78,20 +83,15 @@
 #+end_src
 ** flycheck
 #+begin_src elisp
-(use-package flycheck
-  :straight t
-  :init (global-flycheck-mode))
+  (use-package flycheck
+    :straight t
+    :defer t
+    ;; :init (global-flycheck-mode)
+    )
 
-;; (flycheck-define-checker proselint
-;; 			 "A linter for prose."
-;; 			 :command ("proselint" source-inplace)
-;; 			 :error-patterns
-;; 			 ((warning line-start (file-name) ":" line ":" column ": "
-;; 				   (id (one-or-more (not (any " "))))
-;; 				   (message) line-end))
-;; 			 :modes (text-mode markdown-mode gfm-mode))
-
-;; (add-to-list 'flycheck-checkers 'proselint)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (global-flycheck-mode)))
 #+end_src
 ** markdown
 #+begin_src elisp
@@ -111,10 +111,4 @@
   :bind (("C-c C-g w" . #'writegood-mode)
 	 ("C-c C-g g" . #'writegood-grade-level)
 	 ("C-c C-g e" . #'writegood-reading-ease)))
-#+end_src
-** timemachine
-#+begin_src elisp
-(use-package git-timemachine
-  :straight t
-  :bind (("C-c C-g t" . #'git-timemachine-toggle)))
 #+end_src

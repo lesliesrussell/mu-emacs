@@ -1,24 +1,3 @@
-(use-package olivetti
-  :straight t
-  :init
-  (setq olivetti-body-width .67)
-  :config
-  (defun distraction-free ()
-    "Distraction-free writing environment"
-    (interactive)
-    (if (equal olivetti-mode nil)
-        (progn
-          (window-configuration-to-register 1)
-          (delete-other-windows)
-          (text-scale-increase 2)
-          (olivetti-mode t))
-      (progn
-        (jump-to-register 1)
-        (olivetti-mode 0)
-        (text-scale-decrease 2))))
-  :bind
-  (("<f9>" . distraction-free)))
-
 (use-package caps-lock
   :straight t
   :bind ("C-c l" . #'caps-lock-mode))
@@ -61,18 +40,13 @@
 
 (use-package flycheck
   :straight t
-  :init (global-flycheck-mode))
+  :defer t
+  ;; :init (global-flycheck-mode)
+  )
 
-;; (flycheck-define-checker proselint
-;; 			 "A linter for prose."
-;; 			 :command ("proselint" source-inplace)
-;; 			 :error-patterns
-;; 			 ((warning line-start (file-name) ":" line ":" column ": "
-;; 				   (id (one-or-more (not (any " "))))
-;; 				   (message) line-end))
-;; 			 :modes (text-mode markdown-mode gfm-mode))
-
-;; (add-to-list 'flycheck-checkers 'proselint)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (global-flycheck-mode)))
 
 (use-package markdown-mode
   :straight t
@@ -88,7 +62,3 @@
   :bind (("C-c C-g w" . #'writegood-mode)
 	 ("C-c C-g g" . #'writegood-grade-level)
 	 ("C-c C-g e" . #'writegood-reading-ease)))
-
-(use-package git-timemachine
-  :straight t
-  :bind (("C-c C-g t" . #'git-timemachine-toggle)))

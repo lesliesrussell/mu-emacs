@@ -3,6 +3,7 @@
 #+PROPERTY: header-args :tangle yes
 
 * pretty org
+Now this I do use. It makes emacs look more pleasing. Again, not integral to the setup. Noting will break if you disable this group of packages.
 Stolen from https://lucidmanager.org/productivity/ricing-org-mode/
 Set default, fixed and variabel pitch fonts
 Use M-x menu-set-font to view available fonts
@@ -42,13 +43,16 @@ Show hidden emphasis markers
 #+end_src
 * bullets
  Nice bullets
-#+begin_src elisp :tnagle yes
-(use-package org-superstar
-  :straight t
-  :config
-  (setq org-superstar-special-todo-items t)
+#+begin_src elisp
+  (use-package org-superstar
+    :straight t
+    :defer t
+    :config
+    (setq org-superstar-special-todo-items t)
+    )
+
   (add-hook 'org-mode-hook (lambda ()
-                             (org-superstar-mode 1))))
+                             (org-superstar-mode 1)))
 #+end_src
 * COMMENT latex scale
 Increase size of LaTeX fragment previews

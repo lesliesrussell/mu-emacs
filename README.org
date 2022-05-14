@@ -5,57 +5,17 @@
 [[./screenshot.png]]
 
 * Reasoning
+I wanted something that worked a little like Doom Emacs or Spacemacs, but that I understood (mostly) and could make my own. I wanted it to be fast, even-though I run emacs as a daemon. There might be times I purposely or accidentally start an instance outside daemon and it should not be slow.
 
-There are things I like about [[https://github.com/doomemacs/doomemacs][Doom Emacs]] and things I like about [[https://github.com/syl20bnr/spacemacs][Spacemacs]] and lots that I didn't like. I think they are great for the people who use them and great for people who just want to get up and running fast. There are millions of reasons to like and use either of those or any of the other configs available. But I am not a fan of having to learn how someone else wants me to use my editor. Keep your opinions. So, as I was working on my little config (all the while grousing about one thing or another) when I thought maybe others might feel the same as me. The ease of just cloning a repo to get up and running but without someone else's opinion standing between me and my work.
+I wanted my config to be pretty because why not?
 
-I found myself frustrated with DE and S because of how difficult minor changes (cosmetic, or functional) were. I spent way too much time trying to bend those opinions to mine, and I had trouble bending mine to theirs so...time to move on.
-
-** What mμ-emacs is:
-Whatever you need it to be. It is really fast. It is pretty. It contains just enough handy packages to get you to a happy place. And I am trying really hard to document everything and clean up as I go. You should be able to easily change things to match your opinion. My goal was to make this available to you, and get out of your way. You know what you need from your editor...I don't.
-
-I used SidharthArya's [[https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea][modular-config.el]] as the core so that it functions somewhat like Spacemacs. I think I found an unintend or undocumented feature. His examples:
-
-#+begin_example
-  (use-package modular-config
-    :custom
-    (modular-config-list '(
-                           (none ())
-                           (minimal (compile core appearance vi))
-                           (news (compile core appearance mount mail ivy news org))
-                           (programming (compile core appearance vi ivy mount org programming vc))
-                           (org (compile core appearance vi ivy mount org server compile dashboard))
-                           (main (compile core appearance programming vi mount org news mail dashboard vc tracking finance server))
-                           ))
-    (modular-config-default 'main)
-    (modular-config-path "~/.emacs.d/lisp")
-    :config
-    (modular-config-command-line-args-process))
-#+end_example
-
-Show for example /(minimal (compile core ... etc))/ other groupings are named /news, programming, org, main, etc/. Now the corresponding files for each of those modules live in the /modular-config-path/ which is a directory the author named //lisp/. But, if you create other directories under /modular-config-path/ and the prepend that directory name on the file name .... Ok this is confusing look:
-
-#+begin_example
-  (use-package modular-config
-  :custom
-  (modular-config-list '(
-                       (none ())
-                       (minimal (minimal/compile
-                                 minimal/core
-                                 minimal/appearance
-                                 minimal/vi))
-                       (news (news/compile
-                              news/core
-                              news/appearance))
-                       ...
-  ))
-#+end_example
-
-So in my usage the prepends are *minimal/* and *news/* which /modular-config/ interprets as a directory. The prepends could be anything like say a version number. So you can add a little structure to your config and do some versioning for testing changes.
-
-None of this is important really but I just wanted to explain and include some working examples to help you understand.
-
-** What mμ-emacs is not:
-It is not my opinion about how you should work. It is not hard to configure. It is not difficult to change.
+** Some of the packages used
+- SidharthArya's [[https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea][modular-config.el]] as the core so that it functions somewhat like Spacemacs.
+- use-package
+- straight
+- fontaine
+- deft
+- consult/embark/vertico/marginalia/orderless
 
 * Installation
 You will want to save your current configs someplace safe. Then just clone this repo to your preferred /user-emacs-directory/ like so:
@@ -64,28 +24,17 @@ You will want to save your current configs someplace safe. Then just clone this 
 #+end_example
 I have a file called /README.org/ because github uses that as a default. But I'd probably rename it to init.org on your side. It won't change how the file tangles, that is handled by the header arguments. One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press *C-c C-c* that will force org-mode to reload those arguments and might save you some headaches.
 
-As I mention later in this document, I add aliases to zsh to make working on the command line more comfortable, now might be a good time to do this but that is up to you.
+I add aliases to zsh to make working on the command line more comfortable, now might be a good time to do this but that is up to you.
 
-Now, once you have the repo cloned and you are ready to jump in, just start emacs the way you normally would. It takes straight a little while to clone all the repos, and then a little while for emacs to run through and configure everything, but after that your editor should start in 0.4 seconds (I did several tests and included the output of one run to show you I ain't fabricatin'). What that means for me is that I can use emacs without starting a daemon. Because sometimes I want to do that. Mostly I use emacsclient. And you should be able to run this config either way with very little frustration.
+Now, once you have the repo cloned and you are ready to jump in, just start emacs the way you normally would. It takes straight a little while to clone all the repos, and then a little while for emacs to run through and configure everything, but after that your editor should start in +0.4 seconds+ I have that time down to 0.2 seconds (I did several tests and included the output of one run to show you I ain't fabricatin'). What that means for me is that I can use emacs without starting a daemon. Because sometimes I want to do that. Mostly I use emacsclient. And you should be able to run this config either way with very little frustration.
+
 * Configuration
 Directly lifted from the example on the /modular-config/ github repo. It works.
-**
-*** Use emacs built ins as much as I can stand
-Lots of emacs built ins are great. But if there wasn't a good built in, I inserted a respected solid one in its place. I tried /viper/ and found that contrary to opinions, it was pretty good. Ultimately it wasn't for me so I tried /evil/. It was then that I realized that I just don't like vim movement very much. So I left my /viper/ and /evil/ configs in place but not active. You can do whatever you want  but respectfully, it is good to learn the emacs way because most help you will find speaks emacs not evil.
-*** Use respected packages for core
-straight.el, use-package, deft, org-mode, and a nice terminal safe theme were essential for me. What binds it all together is modular-config.el. These, along with some mostly agreed upon settings, make for a minimal usable config. You should be able to clone the repo to your /user-emacs-directory/ and start emacs. You'll experience some delay the first time out because straight has to clone the packages, but there after (in my testing) emacs will start up in around 0.4 seconds--barring any errors.
-*** Use solid package for extras
-I say /respected/ and /solid/ but I mean I respect these packages and for me they are solid. For instance, I use /olivetti/ even though /darkroom/ is better because I don't want all the extras that come with /darkroom/. If you do, I have included a /darkroom/ config. I think I might also include a few others and just leave them disabled.
-*** Don't try to reinvent the wheel
-First, I am not smart enough to reinvent the wheel and inventing is just beyond my ability. Cobbling together, stealing, borrowing...those are in my wheelhouse. I have tried to include attributions to all the places I borrowed but some have fallen through the cracks because I am lazy and initially my intention was not to make this public. Once I thought others might find it useful, I tried to be more diligent but....
-If you find your work (or someone else's work) unacknowledged I'd be thankful if you let me know so I can correct the oversight.
-*** Bundle keybings and configs together
-I tried many variations like keeping all the keybinds in one file but that just got real stupid real fast. It is unavoidable that you will have a file full of bindings that are unique to your work, but I have tried really hard to keep that out of your way here. Mostly successfully. You should be able to comment out any package and not have unintended errors. I am still testing that.
-*** Stick close to the bones of emacs
-This is the only real opinion I have placed between you and emacs. I think that, while it is important to make emacs newbie-friendly, it is also important to attempt to do things the emacs way as much as possible. So I wanted to pick packages that enhanced emacs rather than replaced emacs. I may not have done a very good job of that, but this is a work in progress.
-*** Use private as little as possible
-You should use /private/ a lot. But in releasing this to the public, I tried to keep my fingers out of that /private/. By /private/ I mean the subdirectory under /user-emacs-directory/ titled //modules/private// You can call it whatever you want it is just a directory and as long as you make the changes to init.el to reflect that new name nothing should break. It is just a naming convention and my opinion of how things should look. You can and should make it work the way you want it to work.
+** Use emacs built ins as much as I can stand
+Lots of emacs built ins are great. But if there wasn't a good built in, I inserted a respected solid one in its place. I tried /viper/ and found that contrary to opinions, it was pretty good. Ultimately it wasn't for me so I tried /evil/. It was then that I realized that I just don't like vim movement very much. So I left /viper/ and /evil/. You can do whatever you want  but respectfully, it is good to learn the emacs way because most help you will find speaks emacs not evil.
+
 ** Bootstrap straight.el
+This is lifted from the package authors repo. It works and I didn't need to change it.
 #+begin_src elisp
   ;; -*- lexical-binding: t; -*-
   (defvar bootstrap-version)
@@ -116,9 +65,9 @@ So this started out as nothing but an attempt to simplify my, out of control, co
 It works for me.
 
 *** My setup
-As of right now I have four module groups; /base/, /stable/, /private/, and /testing/ with /private/ set as the /modular-config-default/. I couldn't come up with a good reason to have different bookmarks for each config so I am not using /modular-config-use-seperate-bookmarks/ at this time.
++As of right now I have four module groups; /base/, /stable/, /private/, and /testing/ with /private/ set as the /modular-config-default/. I couldn't come up with a good reason to have different bookmarks for each config so I am not using /modular-config-use-seperate-bookmarks/ at this time.+
 
-With /stable/ as the default config, if I start emacs with no /--config/ argument I get the stable version of my config with all the bells and bobs that I know work.
+With /testing/ as the default config, if I start emacs with no /--config/ argument I get the /testing/ version of my config with all the bells and bobs that I know work.
 
 I use vifm, and for that and the command line I alias emacs to start with the /base/ config.
 
@@ -126,65 +75,71 @@ I use vifm, and for that and the command line I alias emacs to start with the /b
   alias e='emacs -nw --config base'
 #+end_example
 
-Probably one day I won't do that but there was a good reason and I can't remember why.
++Probably one day I won't do that but there was a good reason and I can't remember why.+ I remembered why, and stopped.
 
 If I need to I can pass the /none/ parameter to /--config/ and have just plain old emacs which can be handy.
 
 #+begin_src elisp
-    (use-package modular-config
-      :straight t
-      :custom
-      (modular-config-list '((none ())
-			     ;; the most minimal config I can stand
-			     (base (base/core
-				    base/daemon
-				    base/appearance
-				    ;; base/mode-line
-				    base/undo
-				    base/keybindings
-				    base/searching
-				    base/git
-				    base/completion
-				    base/which))
-			     ;; my stable module group for daily use
-			     (stable ((base)
-				      stable/my-org
-				      stable/my-org-pretty))
-			     ;; just private configs that might not want in repo
-			     (private ((stable)
-				       private/writing
-				       private/org-roam
-				       ;; private-eshell-syntax-highlighting
-				       private/deft-extras
-				       ))
-			     ;; if I add a new module I can test drive it
-			     (testing ((private)
-				       testing/org-test
-				       testing/proced-extras
-				       testing/lambda-line-config
-				       ;; testing/evil
-				       ))
-			     ))
-      ;; I default to private but so far it has been both
-      ;; comfortable and safe to change this to any of the other
-      ;; module groups.
-      (modular-config-default 'testing)
+  (use-package modular-config
+    :straight t
+    :custom
+    (modular-config-list '((none ())
+                           ;; the most minimal config I can stand
+                           (base (base/core
+                                  base/daemon
+                                  base/appearance
+                                  ;; base/mode-line
+                                  base/undo
+                                  base/keybindings
+                                  base/searching
+                                  base/git
+                                  base/completion
+                                  base/which))
+                           ;; my stable module group for daily use
+                           (stable ((base)
+                                    stable/mu-org
+                                    stable/writing
+                                    stable/org-roam
+                                    stable/deft-extras
+                                    ))
+                           ;; just private configs that might not want in repo
+                           (private ((stable)
+                                     ;; private/keybinds
+                                     ))
+                           ;; if I add a new module I can test drive it
+                           (testing ((private)
+                                     testing/org-test
+                                     testing/proced-extras
+                                     testing/lambda-line-config
+                                     testing/esup
+                                     testing/proced-extras
+                                     ;; testing/programming-go
+                                     ;; testing/shr-eww
+                                     ;; testing/evil
+                                     testing/popper-config
+                                     testing/fontaine-config
+                                     ))
+                           ))
+    ;; I default to private but so far it has been both
+    ;; comfortable and safe to change this to any of the other
+    ;; module groups.
+    (modular-config-default 'testing)
 
-      ;; the developer of this package uses /lisp as his path
-      ;; but I wanted something that makes more sense for me
-      ;; since I use /lisp for something else
-      ;; This probably ought to be a concat with emacs user directory
-      (modular-config-path (concat user-emacs-directory "modules"))
+    ;; the developer of this package uses /lisp as his path
+    ;; but I wanted something that makes more sense for me
+    ;; since I use /lisp for something else
+    ;; This probably ought to be a concat with emacs user directory
+    (modular-config-path (concat user-emacs-directory "modules"))
 
-      ;; I don't use this but I included it because other people might want
-      ;; to use it and I might find a need for it later.
-      ;; (modular-config-use-separate-bookmarks t)
-      :config
-      (modular-config-command-line-args-process))
+    ;; I don't use this but I included it because other people might want
+    ;; to use it and I might find a need for it later.
+    ;; (modular-config-use-separate-bookmarks t)
+    :config
+    (modular-config-command-line-args-process))
 #+end_src
 
-*** TODO Future
-A lot of this stuff needs to be refactored and cleaned up. I intend to test this config either in a VM or a fresh install (Arch btw) on a lappy.
+*** DONE Future
+A lot of this stuff needs to be refactored and cleaned up. I intend to test this config either in a VM or a fresh install on a lappy.
 
 **** DONE Correct references to .emacs.d
 Since this i my personal config I just kinda knocked it together, so lots of bad ideas got through. This one need fixing
@@ -199,6 +154,8 @@ Really need to follow some naming conventions. Core modules should probably be p
 I may not use evil, but I'd like to get it working as a module so that can test it at least.
 
 **** DONE Mode line
+- Note taken on [2022-05-14 Sat 02:52] \\
+  Changed from mood-line to lambda-line. It has a few weird intermittent bugs but otherwise works pretty well.
 Something is off about the current mode line.
 
 **** DONE Fix module list
@@ -215,105 +172,10 @@ I want to clean up base-core and move key bindings into a module
 After getting to a point where I feel comfortable with using this config daily I decided to test the start up time.
 I am happy with the results:
 #+begin_example
-  Total User Startup Time: 0.402sec     Total Number of GC Pauses: 2     Total GC Time: 0.012sec
-
-  bootstrap.el:82  0.182sec   45%
-  (straight-use-recipes '(melpa :type git :host github
-                                :repo "melpa/melpa"
-                                :build nil))
-
-  base-git.el:1  0.172sec   42%
-  (use-package magit
-    :straight t
-    :bind (("C-c C-g m" . #'magit)))
-
-  private-writing.el:49  0.023sec   5%
-  (use-package flycheck
-    :straight t
-    :init (global-flycheck-mode))
-
-  bootstrap.el:80  0.012sec   2%
-  (straight-use-recipes '(org-elpa :local-repo nil))
-
-  base-appearance.el:1  0.010sec   2%
-  (if (fboundp 'menu-bar-mode)
-      (menu-bar-mode -1))
-
-  bootstrap.el:8  0.004sec   0%
-  (let* ((bootstrap.el
-          ;; If this file is accessed through a symlink (this may happen
-          ;; when an old version of the bootstrap snippet is used to
-          ;; load straight.el), resolve it. We need to be looking at
-          ;; the actual file, since the eventual target of the
-          ;; symlink is the only way we can actually identify the
-          ;; straight.el repository (which might be called something
-          ;; else).
-          (file-truename
-           (or
-            ;; If the file is being loaded from the init-file.
-            load-file-name
-            ;; If the file is being evaluated with something like
-            ;; `eval-buffer'.
-            buffer-file-name)))
-         (straight.el
-          (expand-file-name
-           "straight.el" (file-name-directory bootstrap.el))))
-    ;; This logic replicates that in `straight--build-compile',
-    ;; and is used to silence byte-compile warnings and other cruft.
-    (cl-letf (((symbol-function #'save-some-buffers) #'ignore)
-              ((symbol-function #'byte-compile-log-1) #'ignore)
-              ((symbol-function #'byte-compile-log-file) #'ignore)
-              ((symbol-function #'byte-compile-log-warning) #'ignore))
-      (let ((byte-compile-warnings nil)
-            (byte-compile-verbose nil)
-            (message-log-max nil)
-            (inhibit-message t)
-            (emacs-version-changed t))
-        ;; Argument 0 means (for some reason) to byte-compile even if
-        ;; the .elc file does not already exist (but not if the .elc
-        ;; file is at least as new as the .el file).
-        (byte-recompile-file straight.el nil 0)
-        (catch 'emacs-version-changed
-          ;; straight.el has a fun hack that throws
-          ;; `emacs-version-changed' if the version of Emacs has changed
-          ;; since the last time it was byte-compiled. This prevents us
-          ;; from accidentally loading invalid byte-code, hopefully.
-          (load (file-name-sans-extension
-                 (expand-file-name straight.el default-directory))
-                nil 'nomessage)
-          (setq emacs-version-changed nil))
-        (when emacs-version-changed
-          ;; In safe mode, sacrifice performance for safety.
-          (if (bound-and-true-p straight-safe-mode)
-              (load straight.el nil 'nomessage 'nosuffix)
-            ;; Don't use the optional LOAD argument for
-            ;; `byte-compile-file' because it emits a message.
-            (byte-compile-file straight.el)
-            (load (file-name-sans-extension
-                   (expand-file-name straight.el default-directory))
-                  nil 'nomessage))))))
-
-  init.el:2  0.001sec   0%
-  (defvar bootstrap-version)
-
-  bootstrap.el:5  0.000sec   0%
-  (require 'bytecomp)
-
-  bootstrap.el:65  0.000sec   0%
-  (require 'straight)
-
-  bootstrap.el:6  0.000sec   0%
-  (require 'cl-lib)
-
-  bootstrap.el:69  0.000sec   0%
-  (straight--reset-caches)
-
-  bootstrap.el:78  0.000sec   0%
-  (setq straight-recipe-repositories nil)
-
 #+end_example
+
 I haven't done anything special. All the code came from reading other users config. Directly stealing from Spacemacs, Doom Emacs, and Sanemacs.
 The code could be cleaned up and made even faster I'll bet but it works for me.
-Eventually I will get an evil module, as part of the base and tinker with that. But aside from a few bugs I haven't found a good solution for yet anybody could use this as a great starting point.
++Eventually I will get an evil module, as part of the base and tinker with that.+ But aside from a few bugs I haven't found a good solution for yet anybody could use this as a great starting point.
 
 Not that anyone should. There are much better available.

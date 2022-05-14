@@ -8,8 +8,8 @@ Stolen from [[https://www.reddit.com/r/emacs/comments/h0h4ix/how_to_configure_mu
 #+begin_src elisp
   ;; (defvar mu-deft-dir-list '()
   ;;   "List of deft dirs")
-  (require 'consult)
-  (require 'deft)
+  ;; (require 'consult)
+  ;; (require 'deft)
 
   (setq mu-deft-dir-list '("~/Documents/"
                            "~/.config/emacs/modules/"

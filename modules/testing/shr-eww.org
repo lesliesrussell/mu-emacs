@@ -3,11 +3,13 @@
 #+PROPERTY: header-args :tangle yes
 
 * Info
+Not working. I'll come back to it.
 [[https://github.com/chenyanming/shrface/tree/b8a23e097b25d6c7754f9aaf4de89259f8a0b17d][chenyanming/shrface]]
 * eww shr
 #+begin_src elisp
   (use-package shrface
     :straight t
+    :defer t
     :config
     (shrface-basic)
     (shrface-trial)
@@ -15,7 +17,8 @@
     (setq shrface-href-versatile t)
     ;; (define-key 'shrface-mode-map (kbd "M-l") #'consult-imenu)
 
-    (Require' 'shr-tag-pre-highlight)
+    (require 'shrface)
+    (require 'shr-tag-pre-highlight)
     (add-to-list 'shr-external-rendering-functions '(pre . shrface-shr-tag-pre-highlight))
     (defun shrface-shr-tag-pre-highlight (pre)
       "Highlighting code in PRE."
@@ -52,6 +55,7 @@
 #+begin_src elisp
   (use-package eww
     :straight t
+    :defer t
     :init
     (add-hook 'eww-after-render-hook #'shrface-mode)
     :config

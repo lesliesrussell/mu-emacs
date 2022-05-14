@@ -24,9 +24,12 @@
 
 (use-package org-superstar
   :straight t
+  :defer t
   :config
   (setq org-superstar-special-todo-items t)
-  (add-hook 'org-mode-hook (lambda ()
-                             (org-superstar-mode 1))))
+  )
+
+(add-hook 'org-mode-hook (lambda ()
+                           (org-superstar-mode 1)))
 
 (setq-default line-spacing 1)

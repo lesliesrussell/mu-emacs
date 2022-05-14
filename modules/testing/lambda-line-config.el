@@ -12,15 +12,15 @@
   :custom
   (lambda-line-position 'top) ;; Set position of status-line
   (lambda-line-abbrev t) ;; abbreviate major modes
-  (lambda-line-hspace "  ")  ;; add some cushion
+  (lambda-line-hspace " ")  ;; add some cushion
   (lambda-line-prefix t) ;; use a prefix symbol
   (lambda-line-prefix-padding nil) ;; no extra space for prefix
   (lambda-line-status-invert nil)  ;; no invert colors
   (lambda-line-gui-ro-symbol  " ⨂") ;; symbols
   (lambda-line-gui-mod-symbol " ⬤")
   (lambda-line-gui-rw-symbol  " ◯")
-  (lambda-line-space-top +.20)  ;; padding on top and bottom of line
-  (lambda-line-space-bottom -.20)
+  (lambda-line-space-top +.05)  ;; padding on top and bottom of line
+  (lambda-line-space-bottom -.05)
   (lambda-line-symbol-position 0.1) ;; adjust the vertical placement of symbol
   (lambda-line-syntax t)
   (lambda-line-git-diff-mode-line )

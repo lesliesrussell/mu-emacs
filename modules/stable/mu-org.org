@@ -3,6 +3,7 @@
 #+PROPERTY: header-args :tangle yes
 
 * org mode configuration
+I forget where I stole this. I don't use dropbox but I tested it and it was kinda cool.
 ** fast selection
 #+begin_src elisp
   (setq org-use-fast-todo-selection t)
