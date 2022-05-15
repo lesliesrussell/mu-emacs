@@ -19,5 +19,7 @@
                   "^\\*term.*\\*$"   term-mode   ;term as a popup
                   "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
                   )))
-(popper-mode +1)
-(popper-echo-mode +1))                ; For echo area hints
+  (if (display-graphic-p)
+      (progn
+           (popper-mode +1)
+           (popper-echo-mode +1))))

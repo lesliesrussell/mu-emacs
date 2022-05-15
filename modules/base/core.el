@@ -92,6 +92,8 @@
 
 (setq view-read-only t)
 
+(diminish 'abbrev-mode)
+
 (setenv "GCM_CREDENTIAL_STORE" "gpg")
 
 (add-hook 'prog-mode-hook

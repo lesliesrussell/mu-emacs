@@ -59,6 +59,10 @@ I Moved this to /early-init/ but left it here because I am lazy and forgetful.
 #+begin_src elisp
   (straight-use-package 'use-package)
 #+end_src
+** Install diminish
+#+begin_src elisp
+  (straight-use-package 'diminish)
+#+end_src
 ** Modules list configuration
 So this started out as nothing but an attempt to simplify my, out of control, config. But I quickly realized how powerful this little package is. Combined with use-package, general, and straight; my little config is now reproducible and can be used by anyone. Not that you should, but I have stolen the best bits from a couple of my favorite configs (Spacemacs, Sanemacs, Doom Emacs) and borrowed heavily from some very intelligent Emacsen to arrive at a very fast, usable and easily expandable config.
 

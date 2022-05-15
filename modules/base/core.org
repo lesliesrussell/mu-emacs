@@ -108,6 +108,8 @@
   ;; (setq completion-cycle-threshold 10)
 
   (setq view-read-only t)
+
+  (diminish 'abbrev-mode)
 #+end_src
 ** make magit work with git credential manager
 One way that I work is using git/magit in eshell. This setting makes eshell, git, magit, emacs play together well

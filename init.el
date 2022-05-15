@@ -14,6 +14,8 @@
 
 (straight-use-package 'use-package)
 
+(straight-use-package 'diminish)
+
 (use-package modular-config
   :straight t
   :custom

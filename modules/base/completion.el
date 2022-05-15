@@ -1,15 +1,16 @@
 (use-package company
   :straight t
+  :diminish company-mode
   :config
   (progn
     (bind-key [remap completion-at-point] #'company-complete company-mode-map)
 
     (setq company-tooltip-align-annotations t
-	  ;; Easy navigation to candidates with M-<n>
-	  company-show-numbers t)
+          ;; Easy navigation to candidates with M-<n>
+          company-show-numbers t)
     (setq company-dabbrev-downcase nil))
   :hook (emacs-startup . (lambda ()
-			   (global-company-mode))))
+                           (global-company-mode))))
 
 (bind-key [remap completion-at-point] #'company-complete company-mode-map)
 

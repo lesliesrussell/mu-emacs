@@ -9,6 +9,7 @@
 
 (use-package company-posframe
   :straight t
+  :diminish company-posframe-mode
   :config
   (company-posframe-mode 1))
 
