@@ -1,0 +1,25 @@
+#+title: feebleline config
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* feebleline config
+feebleline is ok. It's got this weird error where if you /M-x cd <RET>/ you get an error like this:
+#+begin_example
+feebleline error: (wrong-type-argument stringp (Git ~/.config/emacs/))
+#+end_example
+I think the error comes from *feebleline-file-directory* but it should be easy to write your own lines for this thing.
+#+begin_src elisp
+  (use-package    feebleline
+    :straight t
+    :config (setq feebleline-msg-functions
+                  '((feebleline-line-number         :post "" :fmt "%5s")
+                    (feebleline-column-number       :pre ":" :fmt "%-2s")
+                    (feebleline-file-directory      :face feebleline-dir-face :post "")
+                    (feebleline-file-or-buffer-name :face font-lock-keyword-face :post "")
+                    (feebleline-file-modified-star  :face font-lock-warning-face :post "")
+                    (feebleline-git-branch          :face feebleline-git-face :pre " : ")
+                    (feebleline-project-name        :align right)
+                    ))
+    (add-hook 'emacs-startup-hook
+              (feebleline-mode 1)))
+#+end_src

@@ -46,7 +46,8 @@
                          (testing ((private)
                                    testing/org-test
                                    testing/proced-extras
-                                   testing/lambda-line-config
+                                   ;;testing/lambda-line-config
+                                   testing/feebleline-config
                                    testing/esup
                                    testing/proced-extras
                                    ;; testing/programming-go
