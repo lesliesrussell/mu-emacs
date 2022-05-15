@@ -2,6 +2,8 @@
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle yes
 
+[[./docs/mu-emacs-logo.png]]
+
 * Configuration
 ** Bootstrap straight.el
 This is lifted from the package authors repo. It works and I didn't need to change it.
