@@ -1,22 +1,22 @@
 
 # Table of Contents
 
--   [Reasoning](#org8589162)
-    -   [Some of the packages used](#org25645d6)
--   [Installation](#org3ddf463)
--   [Configuration](#orgd867172)
-    -   [Use emacs built ins as much as I can stand](#orgb2300be)
-    -   [Bootstrap straight.el](#org33da9de)
-    -   [Install use-package](#org44d47a5)
-    -   [Modules list configuration](#orgdb8e37e)
-        -   [My setup](#org5815a47)
-        -   [Future](#org7a9b5bf)
--   [Test results](#org0794fdc)
+-   [Reasoning](#org31b8307)
+    -   [Some of the packages used](#orgdd169c9)
+-   [Installation](#orge318223)
+-   [Configuration](#org1bf9b3e)
+    -   [Use emacs built ins as much as I can stand](#orgf0bb2a8)
+    -   [Bootstrap straight.el](#orged0418f)
+    -   [Install use-package](#org3738adb)
+    -   [Modules list configuration](#orgee9abef)
+        -   [My setup](#org36e05ae)
+        -   [Future](#org3441cf2)
+-   [Test results](#orgafd2cc4)
 
-![img](./screenshot.png)
+![img](./mu-emacs-logo.png)
 
 
-<a id="org8589162"></a>
+<a id="org31b8307"></a>
 
 # Reasoning
 
@@ -25,7 +25,7 @@ I wanted something that worked a little like Doom Emacs or Spacemacs, but that I
 I wanted my config to be pretty because why not?
 
 
-<a id="org25645d6"></a>
+<a id="orgdd169c9"></a>
 
 ## Some of the packages used
 
@@ -37,7 +37,7 @@ I wanted my config to be pretty because why not?
 -   consult/embark/vertico/marginalia/orderless
 
 
-<a id="org3ddf463"></a>
+<a id="orge318223"></a>
 
 # Installation
 
@@ -52,21 +52,21 @@ I add aliases to zsh to make working on the command line more comfortable, now m
 Now, once you have the repo cloned and you are ready to jump in, just start emacs the way you normally would. It takes straight a little while to clone all the repos, and then a little while for emacs to run through and configure everything, but after that your editor should start in <del>0.4 seconds</del> I have that time down to 0.2 seconds (I did several tests and included the output of one run to show you I ain't fabricatin'). What that means for me is that I can use emacs without starting a daemon. Because sometimes I want to do that. Mostly I use emacsclient. And you should be able to run this config either way with very little frustration.
 
 
-<a id="orgd867172"></a>
+<a id="org1bf9b3e"></a>
 
 # Configuration
 
 Directly lifted from the example on the *modular-config* github repo. It works.
 
 
-<a id="orgb2300be"></a>
+<a id="orgf0bb2a8"></a>
 
 ## Use emacs built ins as much as I can stand
 
 Lots of emacs built ins are great. But if there wasn't a good built in, I inserted a respected solid one in its place. I tried *viper* and found that contrary to opinions, it was pretty good. Ultimately it wasn't for me so I tried *evil*. It was then that I realized that I just don't like vim movement very much. So I left *viper* and *evil*. You can do whatever you want  but respectfully, it is good to learn the emacs way because most help you will find speaks emacs not evil.
 
 
-<a id="org33da9de"></a>
+<a id="orged0418f"></a>
 
 ## Bootstrap straight.el
 
@@ -87,14 +87,14 @@ This is lifted from the package authors repo. It works and I didn't need to chan
       (load bootstrap-file nil 'nomessage))
 
 
-<a id="org44d47a5"></a>
+<a id="org3738adb"></a>
 
 ## Install use-package
 
     (straight-use-package 'use-package)
 
 
-<a id="orgdb8e37e"></a>
+<a id="orgee9abef"></a>
 
 ## Modules list configuration
 
@@ -103,7 +103,7 @@ So this started out as nothing but an attempt to simplify my, out of control, co
 It works for me.
 
 
-<a id="org5815a47"></a>
+<a id="org36e05ae"></a>
 
 ### My setup
 
@@ -177,7 +177,7 @@ If I need to I can pass the *none* parameter to *&#x2013;config* and have just p
       (modular-config-command-line-args-process))
 
 
-<a id="org7a9b5bf"></a>
+<a id="org3441cf2"></a>
 
 ### DONE Future
 
@@ -222,7 +222,7 @@ A lot of this stuff needs to be refactored and cleaned up. I intend to test this
     I want to clean up base-core and move key bindings into a module
 
 
-<a id="org0794fdc"></a>
+<a id="orgafd2cc4"></a>
 
 # Test results
 
