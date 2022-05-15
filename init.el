@@ -28,7 +28,9 @@
                                 base/searching
                                 base/git
                                 base/completion
-                                base/which))
+                                ;; base/which
+                                base/howdoyou-config
+                                ))
                          ;; my stable module group for daily use
                          (stable ((base)
                                   stable/mu-org

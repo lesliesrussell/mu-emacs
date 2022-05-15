@@ -1,0 +1,13 @@
+#+title: HowDoYou Config
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* howdoyou config
+#+begin_src elisp
+  (use-package howdoyou
+    :straight t
+    :bind (("C-h <tab>" . #'howdoyou-query)))
+
+  ;; (add-hook 'howdoyou-mode-hook (lambda ()
+  ;;                                 (switch-to-buffer-other-window "*How Do You*")))
+#+end_src
