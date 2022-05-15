@@ -2,7 +2,7 @@
 #+OPTIONS: num:nil
 
 
-[[./docs/screenshot.png]]
+[[./docs/mu-emacs-logo.png]]
 
 * Reasoning
 I wanted something that worked a little like Doom Emacs or Spacemacs, but that I understood (mostly) and could make my own. I wanted it to be fast, even-though I run emacs as a daemon. There might be times I purposely or accidentally start an instance outside daemon and it should not be slow.
