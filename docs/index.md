@@ -7,7 +7,7 @@
     -   [Install diminish](#orgecbb33f)
     -   [module list](#org2c43c20)
 
-![img](./docs/mu-emacs-logo.png)
+![img](./mu-emacs-logo.png)
 
 
 <a id="org5549b14"></a>
