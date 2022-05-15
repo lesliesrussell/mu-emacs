@@ -1,22 +1,22 @@
 
 # Table of Contents
 
--   [Reasoning](#org31b8307)
-    -   [Some of the packages used](#orgdd169c9)
--   [Installation](#orge318223)
--   [Configuration](#org1bf9b3e)
-    -   [Use emacs built ins as much as I can stand](#orgf0bb2a8)
-    -   [Bootstrap straight.el](#orged0418f)
-    -   [Install use-package](#org3738adb)
-    -   [Modules list configuration](#orgee9abef)
-        -   [My setup](#org36e05ae)
-        -   [Future](#org3441cf2)
--   [Test results](#orgafd2cc4)
+-   [Reasoning](#org02724bb)
+    -   [Some of the packages used](#org7408d51)
+-   [Installation](#org06f7b9e)
+-   [Alternate configs](#org8279790)
+-   [Configuration](#org7bdefbd)
+    -   [Use emacs built ins as much as I can stand](#org76ccaed)
+    -   [Modules list configuration](#org2f1c986)
+        -   [My setup](#orgc032089)
+        -   [Creating new modules](#org6c6efc9)
+        -   [Future](#org64c17ae)
+-   [Test results](#orgb0761d8)
 
-![img](./mu-emacs-logo.png)
+![img](./docs/mu-emacs-logo.png)
 
 
-<a id="org31b8307"></a>
+<a id="org02724bb"></a>
 
 # Reasoning
 
@@ -25,19 +25,19 @@ I wanted something that worked a little like Doom Emacs or Spacemacs, but that I
 I wanted my config to be pretty because why not?
 
 
-<a id="orgdd169c9"></a>
+<a id="org7408d51"></a>
 
 ## Some of the packages used
 
 -   SidharthArya's [modular-config.el](https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea) as the core so that it functions somewhat like Spacemacs.
--   use-package
--   straight
--   fontaine
--   deft
--   consult/embark/vertico/marginalia/orderless
+-   [use-package](https://github.com/jwiegley/use-package/tree/a7422fb8ab1baee19adb2717b5b47b9c3812a84c)
+-   [straight](https://github.com/radian-software/straight.el)
+-   [fontaine](https://git.sr.ht/~protesilaos/fontaine)
+-   [deft](https://jblevins.org/projects/deft/)
+-   [consult](https://github.com/minad/consult)/[embark](https://github.com/oantolin/embark)/[vertico](https://github.com/minad/vertico)/[marginalia](https://github.com/minad/marginalia/tree/26f2bd9ee7b63bcad6604108e2f565b34bc6083b)/[orderless](https://github.com/oantolin/orderless?hmsr=joyk.com)
 
 
-<a id="orge318223"></a>
+<a id="org06f7b9e"></a>
 
 # Installation
 
@@ -45,56 +45,52 @@ You will want to save your current configs someplace safe. Then just clone this 
 
     git clone https://github.com/lesliesrussell/mu-emacs ~/.your-prefered-user-emacs-directory
 
-I have a file called *README.org* because github uses that as a default. But I'd probably rename it to init.org on your side. It won't change how the file tangles, that is handled by the header arguments. One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press **C-c C-c** that will force org-mode to reload those arguments and might save you some headaches.
+One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press **C-c C-c** that will force org-mode to reload those arguments and might save you some headaches.
 
 I add aliases to zsh to make working on the command line more comfortable, now might be a good time to do this but that is up to you.
 
 Now, once you have the repo cloned and you are ready to jump in, just start emacs the way you normally would. It takes straight a little while to clone all the repos, and then a little while for emacs to run through and configure everything, but after that your editor should start in <del>0.4 seconds</del> I have that time down to 0.2 seconds (I did several tests and included the output of one run to show you I ain't fabricatin'). What that means for me is that I can use emacs without starting a daemon. Because sometimes I want to do that. Mostly I use emacsclient. And you should be able to run this config either way with very little frustration.
 
 
-<a id="org1bf9b3e"></a>
+<a id="org8279790"></a>
+
+# Alternate configs
+
+You'll want to check [modular-config](https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea) documentation as the author does a much better job of explaining the workings than I can, but for this repo: what you'll find in [init](init.md) is a variable *modular-config-list* that holds a list of lists<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. Those sub-lists contain the definition of the modules, which consist of a *name* and a list of file names under *modular-config-path* associated with that module. Each module can require or depend on another module.
+
+For this config, I have set up a folder structure under *modular-config-path*:
+
+    ~/.config/emacs/modules/
+    ├── base
+    │   ├── ...
+    ├── private
+    │   └── ...
+    ├── stable
+    │   ├── ...
+    └── testing
+        └── ...
+
+And these directories are where my config files live.
+If you are running the mμ-emacs config, pressing **<SHIFT>-<F8>** will dired-jump you to the *modular-config-path* directory. Or You can press **M-s f** to search by name, while **M-s F** allows you to grep files in your current directory recursively. In most cases you will be in *user-emacs-directory* when you start emacs, but you can cd or open a dired to the *user-emacs-directory* and then grep<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
+
+For this config, the modules are chained such the next module in the list requires the previous module. That way the *testing* module (where I place new things I am playing with, and which the default module) inherits all the previous modules. If you don't like this, it is easy to change.
+
+
+<a id="org7bdefbd"></a>
 
 # Configuration
 
 Directly lifted from the example on the *modular-config* github repo. It works.
 
 
-<a id="orgf0bb2a8"></a>
+<a id="org76ccaed"></a>
 
 ## Use emacs built ins as much as I can stand
 
 Lots of emacs built ins are great. But if there wasn't a good built in, I inserted a respected solid one in its place. I tried *viper* and found that contrary to opinions, it was pretty good. Ultimately it wasn't for me so I tried *evil*. It was then that I realized that I just don't like vim movement very much. So I left *viper* and *evil*. You can do whatever you want  but respectfully, it is good to learn the emacs way because most help you will find speaks emacs not evil.
 
 
-<a id="orged0418f"></a>
-
-## Bootstrap straight.el
-
-This is lifted from the package authors repo. It works and I didn't need to change it.
-
-    ;; -*- lexical-binding: t; -*-
-    (defvar bootstrap-version)
-    (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-          (bootstrap-version 5))
-      (unless (file-exists-p bootstrap-file)
-        (with-current-buffer
-    	(url-retrieve-synchronously
-    	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-    	 'silent 'inhibit-cookies)
-          (goto-char (point-max))
-          (eval-print-last-sexp)))
-      (load bootstrap-file nil 'nomessage))
-
-
-<a id="org3738adb"></a>
-
-## Install use-package
-
-    (straight-use-package 'use-package)
-
-
-<a id="orgee9abef"></a>
+<a id="org2f1c986"></a>
 
 ## Modules list configuration
 
@@ -103,7 +99,7 @@ So this started out as nothing but an attempt to simplify my, out of control, co
 It works for me.
 
 
-<a id="org36e05ae"></a>
+<a id="orgc032089"></a>
 
 ### My setup
 
@@ -119,65 +115,15 @@ I use vifm, and for that and the command line I alias emacs to start with the *b
 
 If I need to I can pass the *none* parameter to *&#x2013;config* and have just plain old emacs which can be handy.
 
-    (use-package modular-config
-      :straight t
-      :custom
-      (modular-config-list '((none ())
-    			 ;; the most minimal config I can stand
-    			 (base (base/core
-    				base/daemon
-    				base/appearance
-    				;; base/mode-line
-    				base/undo
-    				base/keybindings
-    				base/searching
-    				base/git
-    				base/completion
-    				base/which))
-    			 ;; my stable module group for daily use
-    			 (stable ((base)
-    				  stable/mu-org
-    				  stable/writing
-    				  stable/org-roam
-    				  stable/deft-extras
-    				  ))
-    			 ;; just private configs that might not want in repo
-    			 (private ((stable)
-    				   ;; private/keybinds
-    				   ))
-    			 ;; if I add a new module I can test drive it
-    			 (testing ((private)
-    				   testing/org-test
-    				   testing/proced-extras
-    				   testing/lambda-line-config
-    				   testing/esup
-    				   testing/proced-extras
-    				   ;; testing/programming-go
-    				   ;; testing/shr-eww
-    				   ;; testing/evil
-    				   testing/popper-config
-    				   testing/fontaine-config
-    				   ))
-    			 ))
-      ;; I default to private but so far it has been both
-      ;; comfortable and safe to change this to any of the other
-      ;; module groups.
-      (modular-config-default 'testing)
 
-      ;; the developer of this package uses /lisp as his path
-      ;; but I wanted something that makes more sense for me
-      ;; since I use /lisp for something else
-      ;; This probably ought to be a concat with emacs user directory
-      (modular-config-path (concat user-emacs-directory "modules"))
+<a id="org6c6efc9"></a>
 
-      ;; I don't use this but I included it because other people might want
-      ;; to use it and I might find a need for it later.
-      ;; (modular-config-use-separate-bookmarks t)
-      :config
-      (modular-config-command-line-args-process))
+### Creating new modules
+
+I wanted to make it simple because I feel like it is something that will be done a lot so if you *M-x* **mu-new-module-buffer** mμ-emacs will ask a couple of questions, create a new buffer, and save it in the place you want it.
 
 
-<a id="org3441cf2"></a>
+<a id="org64c17ae"></a>
 
 ### DONE Future
 
@@ -222,7 +168,7 @@ A lot of this stuff needs to be refactored and cleaned up. I intend to test this
     I want to clean up base-core and move key bindings into a module
 
 
-<a id="orgafd2cc4"></a>
+<a id="orgb0761d8"></a>
 
 # Test results
 
@@ -250,3 +196,10 @@ The code could be cleaned up and made even faster I'll bet but it works for me.
 <del>Eventually I will get an evil module, as part of the base and tinker with that.</del> But aside from a few bugs I haven't found a good solution for yet anybody could use this as a great starting point.
 
 Not that anyone should. There are much better available.
+
+
+# Footnotes
+
+<sup><a id="fn.1" href="#fnr.1">1</a></sup> [Cons Cell and List Types](https://www.gnu.org/software/emacs/manual/html_node/elisp/Cons-Cell-Type.html) explains.
+
+<sup><a id="fn.2" href="#fnr.2">2</a></sup> A handy little thing I when stumbling around directories is to press *C-u* then *C-x d* and open a dired buffer in the *user-emacs-directory*. Once there all the sub-directories will have been inserted for you (as if you pressed *i* on each sub-directory). You can then press *%g* and grep all the files and emacs will mark the files containing matches to your pattern.
