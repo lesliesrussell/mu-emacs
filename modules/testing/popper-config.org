@@ -26,6 +26,8 @@ Lifted from [[https://github.com/karthink/popper][karthink/popper]] and you can 
                     "^\\*term.*\\*$"   term-mode   ;term as a popup
                     "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
                     )))
-  (popper-mode +1)
-  (popper-echo-mode +1))                ; For echo area hints
+    (unless (window-system
+             (popper-mode +1)
+             (popper-echo-mode +1))                ; For echo area hints
+      ))
 #+end_src
