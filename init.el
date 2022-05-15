@@ -47,7 +47,8 @@
                                    testing/org-test
                                    testing/proced-extras
                                    ;;testing/lambda-line-config
-                                   testing/feebleline-config
+                                   ;;testing/feebleline-config
+                                   testing/simple-modeline-config
                                    testing/esup
                                    testing/proced-extras
                                    ;; testing/programming-go

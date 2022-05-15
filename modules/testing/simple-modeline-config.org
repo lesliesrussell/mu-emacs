@@ -1,0 +1,10 @@
+#+title: simple-modeline config
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :tangle yes
+
+* simple-modeline config
+#+begin_src elisp
+  (use-package simple-modeline
+    :straight t
+    :hook (after-init . simple-modeline-mode))
+#+end_src
