@@ -128,6 +128,36 @@
   (backward-word)
   (delete-region (point) (mark)))
 
+(defun mu--save-module-buffer ()
+  (write-file (concat modular-config-path "/"
+                      (completing-read "Module dir: "
+                                       '("base" "stable" "private" "testing")) "/" (buffer-name))))
+
+(defun mu--insert-module-org-headings (mu-mod-name)
+  "Insert module headings"
+
+  (setq mu-mod-head (concat "#+title: " mu-mod-name "\n"
+                            "#+OPTIONS: num:nil" "\n"
+                            "#+PROPERTY: header-args :tangle yes" "\n" "\n"))
+        (save-excursion
+          (save-restriction
+            (widen)
+            (goto-char (point-min))
+            (insert mu-mod-head))))
+
+  (defun mu-new-module-buffer ()
+    "Create a new empty buffer."
+    (interactive)
+    (setq mu-module-name (completing-read "Name module: " nil))
+    (let (($buf (generate-new-buffer (concat mu-module-name "-config.org"))))
+      (switch-to-buffer $buf)
+      ;; (funcall (intern org-mode))
+      (org-mode)
+      (mu--insert-module-org-headings mu-module-name)
+      (mu--save-module-buffer)
+      $buf
+      ))
+
 (defun reload-config ()
   (interactive)
   (load-file (concat user-emacs-directory "init.el")))
