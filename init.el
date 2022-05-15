@@ -14,42 +14,46 @@
 
 (straight-use-package 'use-package)
 
+(straight-use-package 'diminish)
+
 (use-package modular-config
   :straight t
   :custom
   (modular-config-list '((none ())
                          ;; the most minimal config I can stand
-                         (base (base/core
-                                base/daemon
-                                base/appearance
-                                ;; base/mode-line
-                                base/undo
-                                base/keybindings
-                                base/searching
-                                base/git
-                                base/completion
-                                base/which))
+                         (base (base/core-config
+                                base/daemon-config
+                                base/appearance-config
+                                base/undo-config
+                                base/keybindings-config
+                                base/searching-config
+                                base/git-config
+                                base/completion-config
+                                ;; base/which-config
+                                base/howdoyou-config
+                                ))
                          ;; my stable module group for daily use
                          (stable ((base)
-                                  stable/mu-org
-                                  stable/writing
-                                  stable/org-roam
-                                  stable/deft-extras
+                                  stable/mu-org-config
+                                  stable/writing-config
+                                  stable/org-roam-config
+                                  stable/deft-extras-config
                                   ))
                          ;; just private configs that might not want in repo
                          (private ((stable)
-                                   ;; private/keybinds
+                                   ;; private/keybinds-config
                                    ))
                          ;; if I add a new module I can test drive it
                          (testing ((private)
-                                   testing/org-test
-                                   testing/proced-extras
-                                   testing/lambda-line-config
-                                   testing/esup
-                                   testing/proced-extras
-                                   ;; testing/programming-go
-                                   ;; testing/shr-eww
-                                   ;; testing/evil
+                                   testing/org-test-config
+                                   testing/proced-config
+                                   ;;testing/lambda-line-config
+                                   ;;testing/feebleline-config
+                                   testing/simple-modeline-config
+                                   testing/esup-config
+                                   ;; testing/go-config
+                                   ;; testing/shr-eww-config
+                                   ;; testing/evil-config
                                    testing/popper-config
                                    testing/fontaine-config
                                    ))

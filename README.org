@@ -1,8 +1,8 @@
 #+title: Minimum μsable Emacs (mμ-emacs) with modules
 #+OPTIONS: num:nil
-#+PROPERTY: header-args :tangle "./init.el"
 
-[[./screenshot.png]]
+
+[[./docs/screenshot.png]]
 
 * Reasoning
 I wanted something that worked a little like Doom Emacs or Spacemacs, but that I understood (mostly) and could make my own. I wanted it to be fast, even-though I run emacs as a daemon. There might be times I purposely or accidentally start an instance outside daemon and it should not be slow.
@@ -11,54 +11,49 @@ I wanted my config to be pretty because why not?
 
 ** Some of the packages used
 - SidharthArya's [[https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea][modular-config.el]] as the core so that it functions somewhat like Spacemacs.
-- use-package
-- straight
-- fontaine
-- deft
-- consult/embark/vertico/marginalia/orderless
+- [[https://github.com/jwiegley/use-package/tree/a7422fb8ab1baee19adb2717b5b47b9c3812a84c][use-package]]
+- [[https://github.com/radian-software/straight.el][straight]]
+- [[https://git.sr.ht/~protesilaos/fontaine][fontaine]]
+- [[https://jblevins.org/projects/deft/][deft]]
+- [[https://github.com/minad/consult][consult]]/[[https://github.com/oantolin/embark][embark]]/[[https://github.com/minad/vertico][vertico]]/[[https://github.com/minad/marginalia/tree/26f2bd9ee7b63bcad6604108e2f565b34bc6083b][marginalia]]/[[https://github.com/oantolin/orderless?hmsr=joyk.com][orderless]]
 
 * Installation
 You will want to save your current configs someplace safe. Then just clone this repo to your preferred /user-emacs-directory/ like so:
 #+begin_example
   git clone https://github.com/lesliesrussell/mu-emacs ~/.your-prefered-user-emacs-directory
 #+end_example
-I have a file called /README.org/ because github uses that as a default. But I'd probably rename it to init.org on your side. It won't change how the file tangles, that is handled by the header arguments. One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press *C-c C-c* that will force org-mode to reload those arguments and might save you some headaches.
+
+One quick thing, if you have trouble tangling any of these files after making changes, just put the point on the header argument line and press *C-c C-c* that will force org-mode to reload those arguments and might save you some headaches.
 
 I add aliases to zsh to make working on the command line more comfortable, now might be a good time to do this but that is up to you.
 
 Now, once you have the repo cloned and you are ready to jump in, just start emacs the way you normally would. It takes straight a little while to clone all the repos, and then a little while for emacs to run through and configure everything, but after that your editor should start in +0.4 seconds+ I have that time down to 0.2 seconds (I did several tests and included the output of one run to show you I ain't fabricatin'). What that means for me is that I can use emacs without starting a daemon. Because sometimes I want to do that. Mostly I use emacsclient. And you should be able to run this config either way with very little frustration.
+
+* Alternate configs
+You'll want to check [[https://github.com/SidharthArya/modular-config.el/tree/2bd77193fa3a7ec0541db284b4034821a8f59fea][modular-config]] documentation as the author does a much better job of explaining the workings than I can, but for this repo: what you'll find in [[file:init.org][init]] is a variable /modular-config-list/ that holds a list of lists[fn:1]. Those sub-lists contain the definition of the modules, which consist of a /name/ and a list of file names under /modular-config-path/ associated with that module. Each module can require or depend on another module.
+
+For this config, I have set up a folder structure under /modular-config-path/:
+#+begin_example
+~/.config/emacs/modules/
+├── base
+│   ├── ...
+├── private
+│   └── ...
+├── stable
+│   ├── ...
+└── testing
+    └── ...
+#+end_example
+And these directories are where my config files live.
+If you are running the mμ-emacs config, pressing *<SHIFT>-<F8>* will dired-jump you to the /modular-config-path/ directory. Or You can press *M-s f* to search by name, while *M-s F* allows you to grep files in your current directory recursively. In most cases you will be in /user-emacs-directory/ when you start emacs, but you can cd or open a dired to the /user-emacs-directory/ and then grep[fn:2].
+
+For this config, the modules are chained such the next module in the list requires the previous module. That way the /testing/ module (where I place new things I am playing with, and which the default module) inherits all the previous modules. If you don't like this, it is easy to change.
 
 * Configuration
 Directly lifted from the example on the /modular-config/ github repo. It works.
 ** Use emacs built ins as much as I can stand
 Lots of emacs built ins are great. But if there wasn't a good built in, I inserted a respected solid one in its place. I tried /viper/ and found that contrary to opinions, it was pretty good. Ultimately it wasn't for me so I tried /evil/. It was then that I realized that I just don't like vim movement very much. So I left /viper/ and /evil/. You can do whatever you want  but respectfully, it is good to learn the emacs way because most help you will find speaks emacs not evil.
 
-** Bootstrap straight.el
-This is lifted from the package authors repo. It works and I didn't need to change it.
-#+begin_src elisp
-  ;; -*- lexical-binding: t; -*-
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-#+end_src
-** COMMENT Turn off package.el
-I Moved this to /early-init/ but left it here because I am lazy and forgetful.
-#+begin_src elisp
-  (setq package-enable-at-startup nil)
-#+end_src
-** Install use-package
-#+begin_src elisp
-  (straight-use-package 'use-package)
-#+end_src
 ** Modules list configuration
 So this started out as nothing but an attempt to simplify my, out of control, config. But I quickly realized how powerful this little package is. Combined with use-package, general, and straight; my little config is now reproducible and can be used by anyone. Not that you should, but I have stolen the best bits from a couple of my favorite configs (Spacemacs, Sanemacs, Doom Emacs) and borrowed heavily from some very intelligent Emacsen to arrive at a very fast, usable and easily expandable config.
 
@@ -79,64 +74,8 @@ I use vifm, and for that and the command line I alias emacs to start with the /b
 
 If I need to I can pass the /none/ parameter to /--config/ and have just plain old emacs which can be handy.
 
-#+begin_src elisp
-  (use-package modular-config
-    :straight t
-    :custom
-    (modular-config-list '((none ())
-                           ;; the most minimal config I can stand
-                           (base (base/core
-                                  base/daemon
-                                  base/appearance
-                                  ;; base/mode-line
-                                  base/undo
-                                  base/keybindings
-                                  base/searching
-                                  base/git
-                                  base/completion
-                                  base/which))
-                           ;; my stable module group for daily use
-                           (stable ((base)
-                                    stable/mu-org
-                                    stable/writing
-                                    stable/org-roam
-                                    stable/deft-extras
-                                    ))
-                           ;; just private configs that might not want in repo
-                           (private ((stable)
-                                     ;; private/keybinds
-                                     ))
-                           ;; if I add a new module I can test drive it
-                           (testing ((private)
-                                     testing/org-test
-                                     testing/proced-extras
-                                     testing/lambda-line-config
-                                     testing/esup
-                                     testing/proced-extras
-                                     ;; testing/programming-go
-                                     ;; testing/shr-eww
-                                     ;; testing/evil
-                                     testing/popper-config
-                                     testing/fontaine-config
-                                     ))
-                           ))
-    ;; I default to private but so far it has been both
-    ;; comfortable and safe to change this to any of the other
-    ;; module groups.
-    (modular-config-default 'testing)
-
-    ;; the developer of this package uses /lisp as his path
-    ;; but I wanted something that makes more sense for me
-    ;; since I use /lisp for something else
-    ;; This probably ought to be a concat with emacs user directory
-    (modular-config-path (concat user-emacs-directory "modules"))
-
-    ;; I don't use this but I included it because other people might want
-    ;; to use it and I might find a need for it later.
-    ;; (modular-config-use-separate-bookmarks t)
-    :config
-    (modular-config-command-line-args-process))
-#+end_src
+*** Creating new modules
+I wanted to make it simple because I feel like it is something that will be done a lot so if you /M-x/ *mu-new-module-buffer* mμ-emacs will ask a couple of questions, create a new buffer, and save it in the place you want it.
 
 *** DONE Future
 A lot of this stuff needs to be refactored and cleaned up. I intend to test this config either in a VM or a fresh install on a lappy.
@@ -194,3 +133,8 @@ The code could be cleaned up and made even faster I'll bet but it works for me.
 +Eventually I will get an evil module, as part of the base and tinker with that.+ But aside from a few bugs I haven't found a good solution for yet anybody could use this as a great starting point.
 
 Not that anyone should. There are much better available.
+
+* Footnotes
+[fn:2] A handy little thing I when stumbling around directories is to press /C-u/ then /C-x d/ and open a dired buffer in the /user-emacs-directory/. Once there all the sub-directories will have been inserted for you (as if you pressed /i/ on each sub-directory). You can then press /%g/ and grep all the files and emacs will mark the files containing matches to your pattern.
+
+[fn:1] [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Cons-Cell-Type.html][Cons Cell and List Types]] explains.
