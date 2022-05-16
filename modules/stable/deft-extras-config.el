@@ -12,4 +12,5 @@
   (setq deft-directory
         (consult--read mu-deft-dir-list :prompt "Directory: "))
   (deft))
-(global-set-key (kbd "C-c M-d") #'mu-select-deft-dir)
+;; (global-set-key (kbd "C-c M-d") #'mu-select-deft-dir)
+(general-define-key "C-c M-d" #'mu-select-deft-dir)

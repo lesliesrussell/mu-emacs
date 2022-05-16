@@ -1,9 +1,3 @@
-(use-package general
-  :straight t
-  :commands (general-define-key
-             general-def)
-  :config )
-
 (general-define-key
  "C->" #'end-of-buffer
  "C-<" #'beginning-of-buffer

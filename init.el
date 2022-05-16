@@ -16,6 +16,12 @@
 
 (straight-use-package 'diminish)
 
+(use-package general
+  :straight t
+  :commands (general-define-key
+             general-def)
+  :config )
+
 (use-package modular-config
   :straight t
   :custom

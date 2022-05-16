@@ -2,18 +2,11 @@
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle yes
 
-* general
-** Info
-I tried to keep this non-invasive. I don't think you are locked into general but I will keep working on that.
-I think you can safely disable this and not suffer.
-** Source
+* general keybinds
+** Some keybinds                                               :fix:general:
+- Note taken on [2022-05-16 Mon 15:04] \\
+  Moved loading of /general/ further ahead of all things. Probably will move it to init.
      #+begin_src elisp
-       (use-package general
-         :straight t
-         :commands (general-define-key
-                    general-def)
-         :config )
-
        (general-define-key
         "C->" #'end-of-buffer
         "C-<" #'beginning-of-buffer

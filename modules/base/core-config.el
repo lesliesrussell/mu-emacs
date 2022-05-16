@@ -184,17 +184,20 @@
 (defun mu-open-modules-dir ()
   (interactive)
   (dired-jump nil (concat user-emacs-directory "modules/")))
-(global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+;; (global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+(general-define-key "S-<f8>" #'mu-open-emacs-dir)
 
 (defun mu-open-emacs-dir ()
   (interactive)
   (dired-jump nil user-emacs-directory))
-(global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+;; (global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+(general-define-key "S-<f9>" #'mu-open-emacs-dir)
 
 (defun mu-find-modules ()
   (interactive)
   (consult-find (concat user-emacs-directory "modules/")))
-(global-set-key (kbd "M-s f") #'mu-find-modules)
+;; (global-set-key (kbd "M-s f") #'mu-find-modules)
+(general-define-key "M-s f" #'mu-find-modules)
 
 (use-package gcmh
   :straight t

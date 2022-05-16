@@ -2,8 +2,6 @@
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle yes
 
-[[./docs/mu-emacs-logo.png]]
-
 * Configuration
 ** Bootstrap straight.el
 This is lifted from the package authors repo. It works and I didn't need to change it.
@@ -35,6 +33,21 @@ I Moved this to /early-init/ but left it here because I am lazy and forgetful.
 #+begin_src elisp
   (straight-use-package 'diminish)
 #+end_src
+** load general
+*** Info                                                      :fix:general:
+- Note taken on [2022-05-16 Mon 15:10] \\
+  I didn't want to do this but I had to move general to init because it need to load as early as possible.
+I tried to keep this non-invasive. I don't think you are locked into general but I will keep working on that.
+I think you can safely disable this and not suffer.
+*** Source
+     #+begin_src elisp
+       (use-package general
+         :straight t
+         :commands (general-define-key
+                    general-def)
+         :config )
+
+     #+end_src
 ** module list
 #+begin_src elisp
   (use-package modular-config

@@ -55,7 +55,7 @@ Getting rid of olivetti because I only used it for what fontaine does.
 - Note taken on [2022-05-14 Sat 02:13] \\
   The /C-c C-g/ binding has got to go! I use that for escape. No big deal if I keep which-key disabled. Still...annoying.
 Needs to be moved to core so it makes more sense.
-*** deft
+*** deft                                                      :fix:general:
 #+begin_src elisp
   (use-package deft
     :straight t
@@ -66,9 +66,10 @@ Needs to be moved to core so it makes more sense.
            ("C-x C-g" . deft-find-file))
     :commands (deft deft-find-file)
     :init)
-    (global-set-key (kbd "M-s F") #'mu-deft-modules)
+  ;; (global-set-key (kbd "M-s F") #'mu-deft-modules)
+  (general-define-key "M-s F" #'mu-deft-modules)
 #+end_src
-*** deft modules
+*** deft modules                                              :fix:general:
 #+begin_src elisp
   (defun mu-deft-modules ()
     (interactive)
@@ -79,7 +80,8 @@ Needs to be moved to core so it makes more sense.
     (deft)
     (setq deft-directory hold-deft-dir))
 
-  (global-set-key (kbd "M-s F") #'mu-deft-modules)
+  ;; (global-set-key (kbd "M-s F") #'mu-deft-modules)
+  (general-define-key "M-s F" #'mu-deft-modules)
 #+end_src
 ** flycheck
 #+begin_src elisp
