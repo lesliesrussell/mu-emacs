@@ -137,6 +137,11 @@ One way that I work is using git/magit in eshell. This setting makes eshell, git
 
   ;; Sensible line breaking
   (add-hook 'text-mode-hook 'visual-line-mode)
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+             (setenv "PAGER" "cat")
+             (setenv "EDITOR" "emacsclient")))
 #+end_src
 ** some org defaults
 #+begin_src elisp
@@ -189,6 +194,22 @@ I stole this and a bunch of other stuff from [[https://sanemacs.com/][Sanemacs]]
         (mu--save-module-buffer)
         $buf
         ))
+#+end_src
+** generate git changelog
+#+begin_src elisp
+  (defun mu--generate-org-git-change-log-buffer ()
+    "Generate an org-mode changelog for current project"
+    (setq mu--git-log-command
+          "git --no-pager log --pretty=")
+
+    (setq mu--git-log-format-string
+          "'** %s %n %an <%ae> %n %b %n %N'")
+
+    (setq total-cmd (concat
+                     mu--git-log-command
+                     mu--git-log-format-string))
+
+    (shell-command total-cmd (generate-new-buffer "*Formatted Git Log*")))
 #+end_src
 ** TODO reload config
 - Note taken on [2022-05-13 Fri 01:47] \\
