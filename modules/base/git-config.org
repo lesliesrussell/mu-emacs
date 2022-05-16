@@ -27,6 +27,12 @@
     ;; (require 'magit-gitflow)
     (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 #+end_src
+** magit forge
+#+begin_src elisp
+  (use-package forge
+    :straight t
+    :after magit)
+#+end_src
 * vdiff
 #+begin_src elisp
   (use-package vdiff

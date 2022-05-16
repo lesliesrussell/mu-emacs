@@ -116,6 +116,11 @@
 ;; Sensible line breaking
 (add-hook 'text-mode-hook 'visual-line-mode)
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+           (setenv "PAGER" "cat")
+           (setenv "EDITOR" "emacsclient")))
+
 (use-package org-defaults
   :defer t
   :custom ((org-src-window-setup 'current-window)))
@@ -157,6 +162,20 @@
       (mu--save-module-buffer)
       $buf
       ))
+
+(defun mu--generate-org-git-change-log-buffer ()
+  "Generate an org-mode changelog for current project"
+  (setq mu--git-log-command
+        "git --no-pager log --pretty=")
+
+  (setq mu--git-log-format-string
+        "'** %s %n %an <%ae> %n %b %n %N'")
+
+  (setq total-cmd (concat
+                   mu--git-log-command
+                   mu--git-log-format-string))
+
+  (shell-command total-cmd (generate-new-buffer "*Formatted Git Log*")))
 
 (defun reload-config ()
   (interactive)
