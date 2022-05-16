@@ -3,11 +3,14 @@
 #+PROPERTY: header-args :tangle yes
 
 * magit
+- Note taken on [2022-05-16 Mon 11:37] \\
+  Removed bind because it was annoying. Will get rid of all /C-? C-g/ key binds.
 #+begin_src elisp
   (use-package magit
     :straight t
     :defer t
-    :bind (("C-c C-g m" . #'magit)))
+    ;; :bind (("C-c C-g m" . #'magit))
+    )
 #+end_src
 ** magit-gitflow plugin
   /C-f/ in the magit status buffer invokes the magit-gitflow popup. If you
