@@ -77,36 +77,6 @@ If I need to I can pass the /none/ parameter to /--config/ and have just plain o
 *** Creating new modules
 I wanted to make it simple because I feel like it is something that will be done a lot so if you /M-x/ *mu-new-module-buffer* mμ-emacs will ask a couple of questions, create a new buffer, and save it in the place you want it.
 
-*** DONE Future
-A lot of this stuff needs to be refactored and cleaned up. I intend to test this config either in a VM or a fresh install on a lappy.
-
-**** DONE Correct references to .emacs.d
-Since this i my personal config I just kinda knocked it together, so lots of bad ideas got through. This one need fixing
-
-**** DONE Fix the core modules
-Really need to follow some naming conventions. Core modules should probably be prefixed with /core-/ or something similar.
-
-**** DONE evil
-- Note taken on [2022-05-09 Mon 16:09] \\
-  Yeah...I am not a fan of evil. I tried it I really did. Just not working for me.
-- But it is there if you need it
-I may not use evil, but I'd like to get it working as a module so that can test it at least.
-
-**** DONE Mode line
-- Note taken on [2022-05-14 Sat 02:52] \\
-  Changed from mood-line to lambda-line. It has a few weird intermittent bugs but otherwise works pretty well.
-Something is off about the current mode line.
-
-**** DONE Fix module list
-- Note taken on [2022-05-06 Fri 13:59] \\
-  I am now pretty happy with how the module list looks and works.
-The module list needs work. I am not happy with the way it looks.
-
-**** DONE convert to org mode in module
-so I can have documentation and etc
-
-**** TODO base-core
-I want to clean up base-core and move key bindings into a module
 * Test results
 After getting to a point where I feel comfortable with using this config daily I decided to test the start up time.
 I am happy with the results:

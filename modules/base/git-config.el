@@ -17,6 +17,12 @@
   :straight t
   :after magit)
 
+(use-package magit-org-todos
+  :straight t
+  :after magit
+  :config
+  (magit-org-todos-autoinsert))
+
 (use-package vdiff
   :straight t
   :commands (vdiff-mode)
