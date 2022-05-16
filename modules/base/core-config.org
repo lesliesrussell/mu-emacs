@@ -362,6 +362,29 @@ I need to fix that.
       (print element)
       (org-babel-tangle-file element)))
 #+end_src
+** move lines                                            :feat:add:movement:
+- Note taken on [2022-05-16 Mon 15:41] \\
+  Stolen from [[https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/][Emacs Redux]] because /C-x C-t/ sucks!
+#+begin_src elisp
+  (defun move-line-up ()
+    "Move up the current line."
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2)
+    (indent-according-to-mode))
+
+  (defun move-line-down ()
+    "Move down the current line."
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1)
+    (indent-according-to-mode))
+
+  (general-define-key
+   "M-[" #'move-line-up
+   "M-]" #'move-line-down)
+#+end_src
 ** COMMENT miniedit
 I don't remember what this does.
 #+begin_src elisp
