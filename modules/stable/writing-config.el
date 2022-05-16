@@ -25,7 +25,8 @@
          ("C-x C-g" . deft-find-file))
   :commands (deft deft-find-file)
   :init)
-  (global-set-key (kbd "M-s F") #'mu-deft-modules)
+;; (global-set-key (kbd "M-s F") #'mu-deft-modules)
+(general-define-key "M-s F" #'mu-deft-modules)
 
 (defun mu-deft-modules ()
   (interactive)
@@ -36,7 +37,8 @@
   (deft)
   (setq deft-directory hold-deft-dir))
 
-(global-set-key (kbd "M-s F") #'mu-deft-modules)
+;; (global-set-key (kbd "M-s F") #'mu-deft-modules)
+(general-define-key "M-s F" #'mu-deft-modules)
 
 (use-package flycheck
   :straight t

@@ -77,36 +77,6 @@ If I need to I can pass the /none/ parameter to /--config/ and have just plain o
 *** Creating new modules
 I wanted to make it simple because I feel like it is something that will be done a lot so if you /M-x/ *mu-new-module-buffer* mμ-emacs will ask a couple of questions, create a new buffer, and save it in the place you want it.
 
-*** DONE Future
-A lot of this stuff needs to be refactored and cleaned up. I intend to test this config either in a VM or a fresh install on a lappy.
-
-**** DONE Correct references to .emacs.d
-Since this i my personal config I just kinda knocked it together, so lots of bad ideas got through. This one need fixing
-
-**** DONE Fix the core modules
-Really need to follow some naming conventions. Core modules should probably be prefixed with /core-/ or something similar.
-
-**** DONE evil
-- Note taken on [2022-05-09 Mon 16:09] \\
-  Yeah...I am not a fan of evil. I tried it I really did. Just not working for me.
-- But it is there if you need it
-I may not use evil, but I'd like to get it working as a module so that can test it at least.
-
-**** DONE Mode line
-- Note taken on [2022-05-14 Sat 02:52] \\
-  Changed from mood-line to lambda-line. It has a few weird intermittent bugs but otherwise works pretty well.
-Something is off about the current mode line.
-
-**** DONE Fix module list
-- Note taken on [2022-05-06 Fri 13:59] \\
-  I am now pretty happy with how the module list looks and works.
-The module list needs work. I am not happy with the way it looks.
-
-**** DONE convert to org mode in module
-so I can have documentation and etc
-
-**** TODO base-core
-I want to clean up base-core and move key bindings into a module
 * Test results
 After getting to a point where I feel comfortable with using this config daily I decided to test the start up time.
 I am happy with the results:
@@ -128,13 +98,21 @@ I am happy with the results:
   bootstrap.el:8  0.004sec   1%
 #+end_example
 
-I haven't done anything special. All the code came from reading other users config. Directly stealing from Spacemacs, Doom Emacs, and Sanemacs.
+All the code came from reading other users config. Directly stealing from Spacemacs, Doom Emacs, and Sanemacs.
+I have tried to attribute everyone from whom I have stolen, but I am afraid I have missed many. So I'll include some links where I probably took things and just don't remember what:
+- [[http://xahlee.org/][Xha Lee]]
+- [[https://sachachua.com/blog/][Sasha Chua]]
+- [[http://www.howardism.org/][Howard Abrams]]
+- [[https://stackexchange.com/][Stack Exchange]]
+- [[https://irreal.org/blog/?tag=emacs][Irreal]]
+- and many more that I still can't remember
+
 The code could be cleaned up and made even faster I'll bet but it works for me.
 +Eventually I will get an evil module, as part of the base and tinker with that.+ But aside from a few bugs I haven't found a good solution for yet anybody could use this as a great starting point.
 
 Not that anyone should. There are much better available.
 
 * Footnotes
-[fn:2] A handy little thing I when stumbling around directories is to press /C-u/ then /C-x d/ and open a dired buffer in the /user-emacs-directory/. Once there all the sub-directories will have been inserted for you (as if you pressed /i/ on each sub-directory). You can then press /%g/ and grep all the files and emacs will mark the files containing matches to your pattern.
+[fn:2] A handy little thing I found when stumbling around directories is to press /C-u/ then /C-x d/ and open a dired buffer in the /user-emacs-directory/. Once there all the sub-directories will have been inserted for you (as if you pressed /i/ on each sub-directory). You can then press /%g/ and grep all the files and emacs will mark the files containing matches to your pattern.
 
 [fn:1] [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Cons-Cell-Type.html][Cons Cell and List Types]] explains.

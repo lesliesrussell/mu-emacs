@@ -116,6 +116,11 @@
 ;; Sensible line breaking
 (add-hook 'text-mode-hook 'visual-line-mode)
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+           (setenv "PAGER" "cat")
+           (setenv "EDITOR" "emacsclient")))
+
 (use-package org-defaults
   :defer t
   :custom ((org-src-window-setup 'current-window)))
@@ -158,6 +163,20 @@
       $buf
       ))
 
+(defun mu--generate-org-git-change-log-buffer ()
+  "Generate an org-mode changelog for current project"
+  (setq mu--git-log-command
+        "git --no-pager log --pretty=")
+
+  (setq mu--git-log-format-string
+        "'** %s %n %an <%ae> %n %b %n %N'")
+
+  (setq total-cmd (concat
+                   mu--git-log-command
+                   mu--git-log-format-string))
+
+  (shell-command total-cmd (generate-new-buffer "*Formatted Git Log*")))
+
 (defun reload-config ()
   (interactive)
   (load-file (concat user-emacs-directory "init.el")))
@@ -165,17 +184,20 @@
 (defun mu-open-modules-dir ()
   (interactive)
   (dired-jump nil (concat user-emacs-directory "modules/")))
-(global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+;; (global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+(general-define-key "S-<f8>" #'mu-open-emacs-dir)
 
 (defun mu-open-emacs-dir ()
   (interactive)
   (dired-jump nil user-emacs-directory))
-(global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+;; (global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+(general-define-key "S-<f9>" #'mu-open-emacs-dir)
 
 (defun mu-find-modules ()
   (interactive)
   (consult-find (concat user-emacs-directory "modules/")))
-(global-set-key (kbd "M-s f") #'mu-find-modules)
+;; (global-set-key (kbd "M-s f") #'mu-find-modules)
+(general-define-key "M-s f" #'mu-find-modules)
 
 (use-package gcmh
   :straight t
@@ -222,3 +244,22 @@ any directory proferred by `consult-dir'."
   (dolist (element tangl-modul-lst)
     (print element)
     (org-babel-tangle-file element)))
+
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(general-define-key
+ "M-[" #'move-line-up
+ "M-]" #'move-line-down)

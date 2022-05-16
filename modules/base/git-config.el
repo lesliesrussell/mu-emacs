@@ -1,7 +1,8 @@
 (use-package magit
   :straight t
   :defer t
-  :bind (("C-c C-g m" . #'magit)))
+  ;; :bind (("C-c C-g m" . #'magit))
+  )
 
 (use-package magit-gitflow
             :straight t
@@ -11,6 +12,16 @@
 
   ;; (require 'magit-gitflow)
   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+
+(use-package forge
+  :straight t
+  :after magit)
+
+(use-package magit-org-todos
+  :straight t
+  :after magit
+  :config
+  (magit-org-todos-autoinsert))
 
 (use-package vdiff
   :straight t

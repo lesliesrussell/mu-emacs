@@ -137,6 +137,11 @@ One way that I work is using git/magit in eshell. This setting makes eshell, git
 
   ;; Sensible line breaking
   (add-hook 'text-mode-hook 'visual-line-mode)
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+             (setenv "PAGER" "cat")
+             (setenv "EDITOR" "emacsclient")))
 #+end_src
 ** some org defaults
 #+begin_src elisp
@@ -190,6 +195,22 @@ I stole this and a bunch of other stuff from [[https://sanemacs.com/][Sanemacs]]
         $buf
         ))
 #+end_src
+** generate git changelog
+#+begin_src elisp
+  (defun mu--generate-org-git-change-log-buffer ()
+    "Generate an org-mode changelog for current project"
+    (setq mu--git-log-command
+          "git --no-pager log --pretty=")
+
+    (setq mu--git-log-format-string
+          "'** %s %n %an <%ae> %n %b %n %N'")
+
+    (setq total-cmd (concat
+                     mu--git-log-command
+                     mu--git-log-format-string))
+
+    (shell-command total-cmd (generate-new-buffer "*Formatted Git Log*")))
+#+end_src
 ** TODO reload config
 - Note taken on [2022-05-13 Fri 01:47] \\
   I have an idea. I think I might make this tangle init.el from README.org
@@ -207,20 +228,22 @@ This is a bit of nonsense
       (interactive)
     (insert "*"))
 #+end_src
-** module functions
+** module functions                                            :fix:general:
 This works. Surprised me how useful just these two little keybinds were.
 #+begin_src elisp
   (defun mu-open-modules-dir ()
     (interactive)
     (dired-jump nil (concat user-emacs-directory "modules/")))
-  (global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+  ;; (global-set-key (kbd "S-<f8>") #'mu-open-modules-dir)
+  (general-define-key "S-<f8>" #'mu-open-emacs-dir)
 
   (defun mu-open-emacs-dir ()
     (interactive)
     (dired-jump nil user-emacs-directory))
-  (global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+  ;; (global-set-key (kbd "S-<f9>") #'mu-open-emacs-dir)
+  (general-define-key "S-<f9>" #'mu-open-emacs-dir)
 #+end_src
-** COMMENT eval dwim
+** COMMENT eval dwim                                           :fix:general:
 - Note taken on [2022-05-13 Fri 01:48] \\
   So this seems not to work. Put a pin in it and circle back.
 #+begin_src elisp
@@ -230,9 +253,10 @@ This works. Surprised me how useful just these two little keybinds were.
       (eval-region beginning end)
       (eval-buffer)))
 
-  (global-set-key (kbd "<f5>") #'mu-eval-dwim)
+  ;; (global-set-key (kbd "<f5>") #'mu-eval-dwim)
+  (general-define-key "<f5>" #'mu-eval-dwim)
 #+end_src
-** find modules
+** find modules                                                :fix:general:
 Again stupid handy
 Stole parts of this from [[https://emacs.stackexchange.com/questions/12334/elisp-for-applying-command-to-only-the-selected-region][StackExchange:Elisp for applying command to only the selected region]]
 On my laptop, I just clone the repo to ~/.config/emacs and in that case I can use this function to search for the module I want.
@@ -240,7 +264,8 @@ On my laptop, I just clone the repo to ~/.config/emacs and in that case I can us
   (defun mu-find-modules ()
     (interactive)
     (consult-find (concat user-emacs-directory "modules/")))
-  (global-set-key (kbd "M-s f") #'mu-find-modules)
+  ;; (global-set-key (kbd "M-s f") #'mu-find-modules)
+  (general-define-key "M-s f" #'mu-find-modules)
 #+end_src
 ** gchm
 I saw a reddit about this package and tried it. I am not sure it helps (I don't really notice it) but it doesn't hurt. You decide.
@@ -253,7 +278,7 @@ I saw a reddit about this package and tried it. I am not sure it helps (I don't 
   (gcmh-auto-idle-delay-factor 10)
   (gcmh-high-cons-threshold (* 16 1024 1024) "16MB"))
 #+end_src
-** COMMENT eshell here
+** COMMENT eshell here                                         :fix:general:
 I wanna say I stole this from [[http://www.howardism.org/][Howard Abrams]] I think he posted it on a reddit thread.
 I don't use the /eshell/x/ function but I included it for completeness.
 #+begin_src elisp
@@ -275,7 +300,8 @@ I don't use the /eshell/x/ function but I included it for completeness.
       (insert (concat "ls"))
       (eshell-send-input)))
 
-  (global-set-key (kbd "C-!") 'eshell-here)
+  ;; (global-set-key (kbd "C-!") 'eshell-here)
+  (general-define-key "C-!")
 
   (defun eshell/x ()
     (insert "exit")
@@ -335,6 +361,29 @@ I need to fix that.
     (dolist (element tangl-modul-lst)
       (print element)
       (org-babel-tangle-file element)))
+#+end_src
+** move lines                                            :feat:add:movement:
+- Note taken on [2022-05-16 Mon 15:41] \\
+  Stolen from [[https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/][Emacs Redux]] because /C-x C-t/ sucks!
+#+begin_src elisp
+  (defun move-line-up ()
+    "Move up the current line."
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2)
+    (indent-according-to-mode))
+
+  (defun move-line-down ()
+    "Move down the current line."
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1)
+    (indent-according-to-mode))
+
+  (general-define-key
+   "M-[" #'move-line-up
+   "M-]" #'move-line-down)
 #+end_src
 ** COMMENT miniedit
 I don't remember what this does.
