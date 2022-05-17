@@ -2,11 +2,16 @@
 #+OPTIONS: num:nil
 #+PROPERTY: header-args :tangle yes
 
-* fontaine settings
+* fontaine settings                                :fix:fontaine:daemon:hack:
+- Note taken on [2022-05-16 Mon 23:15] \\
+  Ok, this works but all it does is ensure that fontaine runs no matter what.
+  I'd rather it didn't run on terminal simply because it does nothing.
+- Note taken on [2022-05-16 Mon 22:58] \\
+  This is not a fix. This is crap.  I think for me, /daemonp/ is better than this but This works except on command line. So I may take fontaine out of the develop & master. Just leave it there to help get people up and running with it.
 Awesome package by [[https://protesilaos.com/emacs/fontaine#h:031b9bea-d42b-4be0-82c7-42712cde94cc][Protesilaos Stavrou]] he has a bunch of really great videos and if you don't follow him on youtube you are missing out.
 To the point tho; this package does what I was using olivetti for. Now I may tinker with darkmode again.
 #+begin_src elisp
-  (defun mu-load-fontaine ()
+  (defun mu--load-fontaine ()
     (use-package fontaine
       :straight `(:package "fontaine" :host nil :type git
                            :repo "https://git.sr.ht/~protesilaos/fontaine"))
@@ -67,7 +72,19 @@ To the point tho; this package does what I was using olivetti for. Now I may tin
     ;; (set-frame-font "DejaVu Sans Mono-9" nil t)
     )
 
-  (if (display-graphic-p)
-      (mu-load-fontaine)
-    (message "Skipping fontaine"))
+  ;; (if (display-graphic-p)
+  ;;     (mu--load-fontaine)
+  ;;   (message "Skipping fontaine"))
+
+  (add-hook 'server-after-make-frame-hook
+            (lambda ()
+              (if (display-graphic-p)
+                  (mu--load-fontaine)
+                (message "Skipping fontaine"))))
+
+  (add-hook 'after-init-hook
+            (lambda ()
+              (if (display-graphic-p)
+                  (mu--load-fontaine)
+                (message "Skipping fontaine"))))
 #+end_src

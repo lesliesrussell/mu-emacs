@@ -1,4 +1,4 @@
-(defun mu-load-fontaine ()
+(defun mu--load-fontaine ()
   (use-package fontaine
     :straight `(:package "fontaine" :host nil :type git
                          :repo "https://git.sr.ht/~protesilaos/fontaine"))
@@ -59,6 +59,18 @@
   ;; (set-frame-font "DejaVu Sans Mono-9" nil t)
   )
 
-(if (display-graphic-p)
-    (mu-load-fontaine)
-  (message "Skipping fontaine"))
+;; (if (display-graphic-p)
+;;     (mu--load-fontaine)
+;;   (message "Skipping fontaine"))
+
+(add-hook 'server-after-make-frame-hook
+          (lambda ()
+            (if (display-graphic-p)
+                (mu--load-fontaine)
+              (message "Skipping fontaine"))))
+
+(add-hook 'after-init-hook
+          (lambda ()
+            (if (display-graphic-p)
+                (mu--load-fontaine)
+              (message "Skipping fontaine"))))
